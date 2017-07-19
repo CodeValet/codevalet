@@ -21,7 +21,8 @@ def main():
                     is_plugin = False
                     try:
                         ['org.jvnet.hudson.plugins', 'org.jenkins-ci.plugins',
-                                '${project.groupId}', 'io.jenkins.plugins'].index(group)
+                                '${project.groupId}', 'io.jenkins.plugins',
+                                'org.jenkins-ci.ui', 'org.jenkins-ci.plugins.workflow'].index(group)
                         is_plugin = True
                     except ValueError:
                         pass
