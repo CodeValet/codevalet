@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir build
+
 OUTPUT_FILE=build/git-refs.txt
 
 echo > $OUTPUT_FILE
