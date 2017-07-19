@@ -2,3 +2,7 @@ FROM jenkinsci/jenkins:alpine
 
 ADD build/plugins/*.hpi /usr/share/jenkins/ref/plugins/
 ADD jenkins-bootstrap/*.groovy /usr/share/jenkins/ref/init.groovy.d/
+
+RUN mkdir /usr/share/jenkins/ref/userContent
+ADD build/git-refs.txt /usr/share/jenkins/ref/userContent
+RUN echo 2.0 > /usr/share/jenkins/ref/jenkins.install.UpgradeWizard.state

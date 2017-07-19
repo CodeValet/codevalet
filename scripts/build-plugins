@@ -21,16 +21,18 @@ function cloneWithDependencies() {
 
 pushd $REPOS_DIR
 
-  cloneWithDependencies workflow-aggregator-plugin
+  for plugin in $(cat $BASE_DIR/../plugins.txt); do
+    cloneWithDependencies $plugin
 
-  for plugin in *-plugin; do
-    echo ">> Building $plugin"
-    (cd  $plugin && \
-      docker run --rm -ti -v $HOME/.m2:/root/.m2 \
-      -v $PWD:/data -w /data ${BUILDER_CONTAINER} mvn install -DskipTests)
-  done;
+    for d in *-plugin; do
+        echo ">> Building $d"
+        (cd  $d && \
+        docker run --rm -ti -v $HOME/.m2:/root/.m2 \
+        -v $PWD:/data -w /data ${BUILDER_CONTAINER} mvn install -DskipTests)
+    done;
 
-  for plugin in $(find . -iname "*.hpi" | grep -v "test-classes"); do
-    cp $plugin ../plugins
+    for hpi in $(find . -iname "*.hpi" | grep -v "test-classes"); do
+        cp $hpi ../plugins
+    done;
   done;
 popd

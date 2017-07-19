@@ -1,0 +1,2 @@
+workflow-aggregator-plugin
+blueocean-plugin
