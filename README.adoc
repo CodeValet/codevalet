@@ -18,10 +18,11 @@ number of reasons:
 
 == Solution
 
-A free service which provides basic CI/CD functions with Jenkins as the core
-platform. With a regularly updated "Jenkins distribution" consisting of many of
-the key plugins which people are used, built from `master`, and rolled through
-the Code Valet cluster:
+A free service which provides basic CI/CD functions, with Jenkins as the core
+platform, to open source repositories on link:https://github.com[GitHub]. With
+a regularly updated "Jenkins distribution" consisting of many of the key
+plugins which people are used, built from `master`, and rolled through the Code
+Valet cluster:
 
 . Blue Ocean
 . GitHub Branch Source
