@@ -1,11 +1,13 @@
 #!/bin/bash
 
-REPOS_DIR=$PWD/build/repos
-BASE_DIR=$(realpath $(dirname $0))
+BUILD_DIR=$PWD/build
+REPOS_DIR=$BUILD_DIR/repos
+SCRIPTS_DIR=$(realpath $(dirname $0))
+PLUGINS_OUTPUT_DIR=$BUILD_DIR/plugins
 BUILDER_CONTAINER="rtyler/codevalet-builder"
 
 mkdir -p $REPOS_DIR
-mkdir -p $BASE_DIR/plugins
+mkdir -p $PLUGINS_OUTPUT_DIR
 
 declare -A PROCESSED
 
@@ -17,7 +19,7 @@ function cloneWithDependencies() {
     fi;
 
     for pom in $(find $1 -iname 'pom.xml' -type f); do
-        (cd $(dirname $pom) && ${BASE_DIR}/plugins-from-pom 'pom.xml')
+        (cd $(dirname $pom) && ${SCRIPTS_DIR}/plugins-from-pom 'pom.xml')
     done;
 
     for dep in $(find $1 -iname '.plugins.txt' -type f -exec cat {} \; | sort -u); do
@@ -28,13 +30,14 @@ function cloneWithDependencies() {
 
 pushd $REPOS_DIR
 
-  for plugin in $(cat $BASE_DIR/../plugins.txt); do
+  for plugin in $(cat $SCRIPTS_DIR/../plugins.txt); do
     cloneWithDependencies $plugin
   done;
 
   set -e
   for d in *-plugin; do
       pushd $d
+
         if [ -f pom.xml ]; then
           echo ">> Building $d"
           git pull --rebase
@@ -46,6 +49,6 @@ pushd $REPOS_DIR
   set +e
 
   for hpi in $(find . -iname "*.hpi" | grep -v "test-classes" | grep -v "target/plugins/"); do
-      cp $hpi ../plugins
+      cp $hpi $PLUGINS_OUTPUT_DIR
   done;
 popd
