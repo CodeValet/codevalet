@@ -1,3 +1,3 @@
 FROM jenkinsci/jenkins:alpine
 
-
+ADD plugins/*.hpi /usr/share/jenkins/ref/plugins/

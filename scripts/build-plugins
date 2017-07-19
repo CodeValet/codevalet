@@ -1,14 +1,33 @@
 #!/bin/bash
 
 REPOS_DIR=$PWD/build/repos
+BASE_DIR=$(realpath $(dirname $0))
+BUILDER_CONTAINER="rtyler/codevalet-builder"
 
 mkdir -p $REPOS_DIR
 
-pushd $REPOS_DIR
-  if [ ! -d blueocean-plugin ]; then
-    git clone --depth 1 https://github.com/jenkinsci/blueocean-plugin.git
+function cloneAndBuild() {
+  if [ ! -d $1 ];  then
+    git clone --depth 1 https://github.com/jenkinsci/$1.git
   fi;
 
-  (cd blueocean-plugin && \
-  docker run --rm -ti -v $HOME/.m2:/root/.m2 -v $PWD:/data -w /data rtyler/codevalet-builder mvn clean install -DskipTests)
+  (cd $1 && ${BASE_DIR}/plugins-from-pom pom.xml)
+
+  for plugin in $(cat $1/.plugins.txt); do
+    echo ">> Must build dependency: $plugin";
+    cloneAndBuild "${plugin}-plugin"
+  done;
+
+  (cd  $1 && \
+    docker run --rm -ti -v $HOME/.m2:/root/.m2 \
+    -v $PWD:/data -w /data ${BUILDER_CONTAINER} mvn install -DskipTests)
+}
+
+pushd $REPOS_DIR
+
+  cloneAndBuild workflow-aggregator-plugin
+
+  for plugin in $(find . -iname "*.hpi" | grep -v "test-classes"); do
+    cp $plugin ../plugins
+  done;
 popd

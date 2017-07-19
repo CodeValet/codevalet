@@ -5,8 +5,8 @@ all: master
 builder:
 	$(MAKE) -C docker builder
 
-master: plugins
-	$(MAKE) -C master
+master:
+	$(MAKE) -C docker master
 
 plugins: ./scripts/build-plugins master
 	./scripts/build-plugins
