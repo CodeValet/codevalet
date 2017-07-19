@@ -9,16 +9,19 @@ def main():
     document = ElementTree(file=sys.argv[1])
     plugins = []
     ns = {'mvn' : 'http://maven.apache.org/POM/4.0.0'}
-    for e in document.findall('mvn:dependencies', ns):
-        for dep in list(e):
-            scope = dep.find('mvn:scope', ns)
-            if scope is None:
-                group = dep.find('mvn:groupId', ns).text
-                plugin = dep.find('mvn:artifactId', ns).text
-                # Let's only bother with dependencies that are actually Jenkins
-                # plugins :)
-                if ((group == '${project.groupId}') or (group == 'org.jenkins-ci.plugins')):
-                    plugins.append(plugin)
+    packaging = document.find('mvn:packaging', ns)
+
+    if (packaging is not None) and (packaging.text == 'hpi'):
+        for e in document.findall('mvn:dependencies', ns):
+            for dep in list(e):
+                scope = dep.find('mvn:scope', ns)
+                if scope is None:
+                    group = dep.find('mvn:groupId', ns).text
+                    plugin = dep.find('mvn:artifactId', ns).text
+                    # Let's only bother with dependencies that are actually Jenkins
+                    # plugins :)
+                    if ((group == '${project.groupId}') or (group == 'org.jenkins-ci.plugins') or (group == 'io.jenkins.plugins')):
+                        plugins.append(plugin)
 
     with open('.plugins.txt', 'w+') as fd:
         for plugin in plugins:
