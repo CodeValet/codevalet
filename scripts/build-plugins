@@ -32,14 +32,16 @@ pushd $REPOS_DIR
     cloneWithDependencies $plugin
   done;
 
+  set -e
   for d in *-plugin; do
       echo ">> Building $d"
-  #    (cd  $d && \
-  #    docker run --rm -ti -v $HOME/.m2:/root/.m2 \
-  #    -v $PWD:/data -w /data ${BUILDER_CONTAINER} mvn install -DskipTests)
+      (cd  $d && \
+      docker run --rm -ti -v $HOME/.m2:/root/.m2 \
+      -v $PWD:/data -w /data ${BUILDER_CONTAINER} mvn install -DskipTests)
   done;
+  set +e
 
-  for hpi in $(find . -iname "*.hpi" | grep -v "test-classes"); do
+  for hpi in $(find . -iname "*.hpi" | grep -v "test-classes" | grep -v "target/plugins/"); do
       cp $hpi ../plugins
   done;
 popd
