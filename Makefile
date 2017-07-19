@@ -1,8 +1,15 @@
 
 
-all: containers
+all: master
 
-containers:
-	$(MAKE) -C docker
+builder:
+	$(MAKE) -C docker builder
 
-.PHONY: clean all containers
+master: plugins
+	$(MAKE) -C master
+
+plugins: ./scripts/build-plugins master
+	./scripts/build-plugins
+
+
+.PHONY: clean all plugins master builder

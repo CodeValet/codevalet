@@ -1,0 +1,14 @@
+#!/bin/bash
+
+REPOS_DIR=$PWD/build/repos
+
+mkdir -p $REPOS_DIR
+
+pushd $REPOS_DIR
+  if [ ! -d blueocean-plugin ]; then
+    git clone --depth 1 https://github.com/jenkinsci/blueocean-plugin.git
+  fi;
+
+  (cd blueocean-plugin && \
+  docker run --rm -ti -v $HOME/.m2:/root/.m2 -v $PWD:/data -w /data rtyler/codevalet-builder mvn clean install -DskipTests)
+popd
