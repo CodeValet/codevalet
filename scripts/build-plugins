@@ -6,7 +6,7 @@ BUILDER_CONTAINER="rtyler/codevalet-builder"
 
 mkdir -p $REPOS_DIR
 
-function cloneAndBuild() {
+function cloneWithDependencies() {
   if [ ! -d $1 ];  then
     git clone --depth 1 https://github.com/jenkinsci/$1.git
   fi;
@@ -15,17 +15,20 @@ function cloneAndBuild() {
 
   for plugin in $(cat $1/.plugins.txt); do
     echo ">> Must build dependency: $plugin";
-    cloneAndBuild "${plugin}-plugin"
+    cloneWithDependencies "${plugin}-plugin"
   done;
-
-  (cd  $1 && \
-    docker run --rm -ti -v $HOME/.m2:/root/.m2 \
-    -v $PWD:/data -w /data ${BUILDER_CONTAINER} mvn install -DskipTests)
 }
 
 pushd $REPOS_DIR
 
-  cloneAndBuild workflow-aggregator-plugin
+  cloneWithDependencies workflow-aggregator-plugin
+
+  for plugin in *-plugin; do
+    echo ">> Building $plugin"
+    (cd  $plugin && \
+      docker run --rm -ti -v $HOME/.m2:/root/.m2 \
+      -v $PWD:/data -w /data ${BUILDER_CONTAINER} mvn install -DskipTests)
+  done;
 
   for plugin in $(find . -iname "*.hpi" | grep -v "test-classes"); do
     cp $plugin ../plugins

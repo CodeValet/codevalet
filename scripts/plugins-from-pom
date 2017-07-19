@@ -17,7 +17,6 @@ def main():
                 plugin = dep.find('mvn:artifactId', ns).text
                 # Let's only bother with dependencies that are actually Jenkins
                 # plugins :)
-                print group, plugin
                 if ((group == '${project.groupId}') or (group == 'org.jenkins-ci.plugins')):
                     plugins.append(plugin)
 
