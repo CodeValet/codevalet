@@ -18,9 +18,17 @@ def main():
                 if scope is None:
                     group = dep.find('mvn:groupId', ns).text
                     plugin = dep.find('mvn:artifactId', ns).text
+                    is_plugin = False
+                    try:
+                        ['org.jvnet.hudson.plugins', 'org.jenkins-ci.plugins',
+                                '${project.groupId}', 'io.jenkins.plugins'].index(group)
+                        is_plugin = True
+                    except ValueError:
+                        pass
+
                     # Let's only bother with dependencies that are actually Jenkins
                     # plugins :)
-                    if ((group == '${project.groupId}') or (group == 'org.jenkins-ci.plugins') or (group == 'io.jenkins.plugins')):
+                    if is_plugin:
                         plugins.append(plugin)
 
     with open('.plugins.txt', 'w+') as fd:
