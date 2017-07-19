@@ -36,6 +36,8 @@ pushd $REPOS_DIR
   #git clone --depth 1 git://github.com/tfennelly/jquery-detached.git jquery-detached-plugin
   #git clone --depth 1 git://github.com/tfennelly/jenkins-ace-editor.git ace-editor-plugin
   git clone --depth 1 git://github.com/jenkinsci/js-libs.git js-libs-plugin
+  (cd js-libs-plugin && find . -maxdepth 1 -type d -exec mkdir -p {}/src/main/webapp/jsmodules \;)
+
 
   for plugin in $(cat $SCRIPTS_DIR/../plugins.txt); do
     cloneWithDependencies $plugin
@@ -49,6 +51,7 @@ pushd $REPOS_DIR
           echo ">> Building $d"
           git pull --rebase
           docker run --rm -ti -v $HOME/.m2:/root/.m2 \
+            -u $(id -u):$(id -g) \
             -v $PWD:/data -w /data ${BUILDER_CONTAINER} mvn install -DskipTests
         fi;
       popd
