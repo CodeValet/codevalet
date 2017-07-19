@@ -1,0 +1,3 @@
+FROM jenkinsci/jenkins:alpine
+
+
