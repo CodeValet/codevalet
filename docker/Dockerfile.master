@@ -1,3 +1,4 @@
 FROM jenkinsci/jenkins:alpine
 
-ADD plugins/*.hpi /usr/share/jenkins/ref/plugins/
+ADD build/plugins/*.hpi /usr/share/jenkins/ref/plugins/
+ADD jenkins-bootstrap/*.groovy /usr/share/jenkins/ref/init.groovy.d/
