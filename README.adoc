@@ -67,3 +67,11 @@ given administrative access to the Jenkins master.
 Groovy scripting will set up some VM templates which will provide dynamically
 provisioned agents in a cloud provider such as Azure, with a fixed quota, i.e.
 2 active machines per.
+
+
+== Success Stories
+
+Below are a list of commits or pull requests created as a result of Code Valet:
+
+* Incorrect versions in the link:https://github.com/jenkinsci/display-url-api-plugin/commit/563a48374dc03baa110e83f79ab1e783ab6de855[display-url-api-plugin pom.xml]
+* Missing repositories and pluginRepositories settings in link:https://github.com/jenkinsci/blueocean-autofavorite-plugin/pull/10[blueocean-autofavorite-plugin pom.xml]
