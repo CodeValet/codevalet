@@ -1,0 +1,27 @@
+= Code Valet
+
+== Problem
+
+The link:https://jenkins.io[Jenkins] project faces a challenge unusual to other
+contemporary CI/CD tools in that it is downloaded and executed on a user's
+machine(s) rather than as a service. While this offers quite a lot of
+flexibility to the end-user, it puts Jenkins developers at a disadvantage for a
+number of reasons:
+
+. There is no direct return line of feedback from where their code is executed.
+  No error reports, etc.
+. There is a significant lag between developers releasing code and it being
+  adopted/used.
+
+
+== Solution
+
+A free service which provides basic CI/CD functions with Jenkins as the core
+platform. With a regularly updated "Jenkins distribution" consisting of many of
+the key plugins which people are used, built from `master`, and rolled through
+the Code Valet cluster:
+
+. Blue Ocean
+. GitHub Branch Source
+. Pipeline
+. ???
