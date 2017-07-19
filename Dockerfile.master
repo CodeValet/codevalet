@@ -1,6 +1,8 @@
 FROM jenkinsci/jenkins:alpine
 
+USER root
 RUN curl -sSL https://ci.jenkins.io/job/Core/job/jenkins/job/master/lastSuccessfulBuild/artifact/war/target/linux-jenkins.war  > /usr/share/jenkins/jenkins.war
+USER jenkins
 
 ADD build/plugins/*.hpi /usr/share/jenkins/ref/plugins/
 ADD jenkins-bootstrap/*.groovy /usr/share/jenkins/ref/init.groovy.d/
