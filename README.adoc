@@ -77,4 +77,5 @@ Below are a list of commits or pull requests created as a result of Code Valet:
 
 * Incorrect versions in the link:https://github.com/jenkinsci/display-url-api-plugin/commit/563a48374dc03baa110e83f79ab1e783ab6de855[display-url-api-plugin pom.xml]
 * Missing repositories and pluginRepositories settings in link:https://github.com/jenkinsci/blueocean-autofavorite-plugin/pull/10[blueocean-autofavorite-plugin pom.xml]
-* link:https://issues.jenkins-ci.org/browse/JENKINS-45665[PipPipeline Groovy depends on plugins which aren't properly hosted in the jenkinsci organization]
+* link:https://issues.jenkins-ci.org/browse/JENKINS-45665[Pipeline Groovy depends on plugins which aren't properly hosted in the jenkinsci organization]
+* link:https://issues.jenkins-ci.org/browse/JENKINS-45668[js-libs project doesn't build properly on a fresh checkout]
