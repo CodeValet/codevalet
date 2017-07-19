@@ -30,6 +30,12 @@ function cloneWithDependencies() {
 
 pushd $REPOS_DIR
 
+  # NOTE: Some repositories, for some reason, are not located in the jenkinsci
+  # organization like they should be. This hacks around that:
+  #  https://issues.jenkins-ci.org/browse/JENKINS-45665
+  git clone --depth 1 git://github.com/tfennelly/jquery-detached.git jquery-detached-plugin
+  git clone --depth 1 git://github.com/tfennelly/jenkins-ace-editor.git ace-editor-plugin
+
   for plugin in $(cat $SCRIPTS_DIR/../plugins.txt); do
     cloneWithDependencies $plugin
   done;
