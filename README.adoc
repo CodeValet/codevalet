@@ -46,8 +46,9 @@ A Kubernetes cluster which will act as the control plane
 A webapp which acts as the primary controller, user interface for non-Jenkins
 specific tasks:
 
-. Surfacing logs from the Jenkins masters
+. Surfacing *publicly readable* logs from the Jenkins masters
 .. Searchable logs for exceptions, etc
+.. Roll-ups of common exceptions by plugin, etc
 . Listing statistics from the other running Jenkins masters
 .. Number of Pipelines active
 
@@ -75,3 +76,4 @@ Below are a list of commits or pull requests created as a result of Code Valet:
 
 * Incorrect versions in the link:https://github.com/jenkinsci/display-url-api-plugin/commit/563a48374dc03baa110e83f79ab1e783ab6de855[display-url-api-plugin pom.xml]
 * Missing repositories and pluginRepositories settings in link:https://github.com/jenkinsci/blueocean-autofavorite-plugin/pull/10[blueocean-autofavorite-plugin pom.xml]
+* link:https://issues.jenkins-ci.org/browse/JENKINS-45665[PipPipeline Groovy depends on plugins which aren't properly hosted in the jenkinsci organization]
