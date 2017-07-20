@@ -51,9 +51,7 @@ pushd $REPOS_DIR
         if [ -f pom.xml ]; then
           echo ">> Building $d"
           git pull --rebase
-          docker run --rm -ti -v $HOME/.m2:/data/.m2 \
-            -e HOME=/data \
-            -u $(id -u):$(id -g) \
+          docker run --rm -ti -v $HOME/.m2:/root/.m2 \
             -v $PWD:/data -w /data ${BUILDER_CONTAINER} mvn install -DskipTests
         fi;
       popd
