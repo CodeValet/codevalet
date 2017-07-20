@@ -58,6 +58,11 @@ pushd $REPOS_DIR
   done;
   set +e
 
+  # Handle an old tombstoned dependency which will not build from source
+  # anymore :(
+  # https://github.com/jenkinsci/pipeline-model-definition-plugin/blob/master/pipeline-model-definition/pom.xml#L117-L123
+  curl https://repo.jenkins-ci.org/releases/org/jenkinsci/plugins/pipeline-model-declarative-agent/1.1.1/pipeline-model-declarative-agent-1.1.1.hpi > $PLUGINS_OUTPUT_DIR/pipeline-model-declarative-agent.hpi
+
   for hpi in $(find . -iname "*.hpi" | grep -v "test-classes" | grep -v "target/plugins/"); do
       cp $hpi $PLUGINS_OUTPUT_DIR
   done;
