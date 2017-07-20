@@ -1,2 +1,3 @@
 workflow-aggregator-plugin
 blueocean-plugin
+github-oauth-plugin
