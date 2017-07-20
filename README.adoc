@@ -29,6 +29,16 @@ Valet cluster:
 . Pipeline
 . ???
 
+== Adding Plugins
+
+The Jenkins masters which run in the Code Valet cluster will take the
+link:https://ci.jenkins.io/blue/organizations/jenkins/Core%2Fjenkins/activity?branch=master[latest core build]
+and build the `master` branch of all the plugins listed in `plugins.txt` in
+this repository, and all of those plugins' dependencies.
+
+In order to propose a new plugin, submit a pull request editing `plugins.txt`
+with the name of the plugin repository under
+link:https://github.com/jenkinsci[github.com/jenkinsci/].
 
 
 == Architecture
@@ -79,3 +89,4 @@ Below are a list of commits or pull requests created as a result of Code Valet:
 * Missing repositories and pluginRepositories settings in link:https://github.com/jenkinsci/blueocean-autofavorite-plugin/pull/10[blueocean-autofavorite-plugin pom.xml]
 * link:https://issues.jenkins-ci.org/browse/JENKINS-45665[Pipeline Groovy depends on plugins which aren't properly hosted in the jenkinsci organization]
 * link:https://issues.jenkins-ci.org/browse/JENKINS-45668[js-libs project doesn't build properly on a fresh checkout]
+* New Blue Ocean installs don't need to link:https://github.com/jenkinsci/blueocean-plugin/pull/1264[install a github-organization-folder dependency]
