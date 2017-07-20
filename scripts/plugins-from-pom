@@ -24,6 +24,7 @@ def main():
                             ['org.jvnet.hudson.plugins', 'org.jenkins-ci.plugins',
                                     'org.jenkinsci.plugins', 'org.jenkins-ci.plugins.icon-shim',
                                     '${project.groupId}', 'io.jenkins.plugins',
+                                    'org.jenkins-ci.main',
                                     'org.6wind.jenkins', 'org.jenkins-ci.plugins.pipeline-stage-view',
                                     'org.jenkins-ci.ui', 'org.jenkins-ci.plugins.workflow'].index(group)
                             # Let's only bother with dependencies that are actually Jenkins
