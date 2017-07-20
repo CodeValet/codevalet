@@ -16,19 +16,21 @@ def main():
             for dep in list(e):
                 scope = dep.find('mvn:scope', ns)
                 if scope is None:
-                    group = dep.find('mvn:groupId', ns).text
-                    plugin = dep.find('mvn:artifactId', ns).text
-                    try:
-                        ['org.jvnet.hudson.plugins', 'org.jenkins-ci.plugins',
-                                'org.jenkinsci.plugins', 'org.jenkins-ci.plugins.icon-shim',
-                                '${project.groupId}', 'io.jenkins.plugins',
-                                'org.6wind.jenkins', 'org.jenkins-ci.plugins.pipeline-stage-view',
-                                'org.jenkins-ci.ui', 'org.jenkins-ci.plugins.workflow'].index(group)
-                        # Let's only bother with dependencies that are actually Jenkins
-                        # plugins :)
-                        plugins.append(plugin)
-                    except ValueError:
-                        pass
+                    optional = dep.find('mvn:optional', ns)
+                    if optional is not None:
+                        group = dep.find('mvn:groupId', ns).text
+                        plugin = dep.find('mvn:artifactId', ns).text
+                        try:
+                            ['org.jvnet.hudson.plugins', 'org.jenkins-ci.plugins',
+                                    'org.jenkinsci.plugins', 'org.jenkins-ci.plugins.icon-shim',
+                                    '${project.groupId}', 'io.jenkins.plugins',
+                                    'org.6wind.jenkins', 'org.jenkins-ci.plugins.pipeline-stage-view',
+                                    'org.jenkins-ci.ui', 'org.jenkins-ci.plugins.workflow'].index(group)
+                            # Let's only bother with dependencies that are actually Jenkins
+                            # plugins :)
+                            plugins.append(plugin)
+                        except ValueError:
+                            pass
 
     with open('.plugins.txt', 'w+') as fd:
         for plugin in plugins:
