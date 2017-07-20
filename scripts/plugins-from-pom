@@ -20,7 +20,7 @@ def main():
                     plugin = dep.find('mvn:artifactId', ns).text
                     try:
                         ['org.jvnet.hudson.plugins', 'org.jenkins-ci.plugins',
-                                'org.jenkinsci.plugins',
+                                'org.jenkinsci.plugins', 'org.jenkins-ci.plugins.icon-shim',
                                 '${project.groupId}', 'io.jenkins.plugins',
                                 'org.jenkins-ci.ui', 'org.jenkins-ci.plugins.workflow'].index(group)
                         # Let's only bother with dependencies that are actually Jenkins
