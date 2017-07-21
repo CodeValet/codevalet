@@ -1,3 +1,4 @@
 workflow-aggregator-plugin
 blueocean-plugin
 github-oauth-plugin
+azure-vm-agents-plugin
