@@ -2,7 +2,27 @@
 
 image::https://github.com/rtyler/codevalet/raw/master/assets/monkey-128.png[Code Valet is a Monkey]
 
-== Problem
+== Joining Code Valet
+
+In order to join the (alpha) for Code Valet, submit a pull request adding your
+username to `monkeys.txt`.
+
+
+== Adding Plugins
+
+The Jenkins masters which run in the Code Valet cluster will take the
+link:https://ci.jenkins.io/blue/organizations/jenkins/Core%2Fjenkins/activity?branch=master[latest core build]
+and build the `master` branch of all the plugins listed in `plugins.txt` in
+this repository, and all of those plugins' dependencies.
+
+In order to propose a new plugin, submit a pull request editing `plugins.txt`
+with the name of the plugin repository under
+link:https://github.com/jenkinsci[github.com/jenkinsci/].
+
+== Meta
+
+
+=== Problem
 
 The link:https://jenkins.io[Jenkins] project faces a challenge unusual to other
 contemporary CI/CD tools in that it is downloaded and executed on a user's
@@ -16,69 +36,22 @@ number of reasons:
   adopted/used.
 
 
-== Solution
+=== Solution
 
 A free service which provides basic CI/CD functions, with Jenkins as the core
-platform, to open source repositories on link:https://github.com[GitHub]. With
-a regularly updated "Jenkins distribution" consisting of many of the key
-plugins which people are used, built from `master`, and rolled through the Code
-Valet cluster:
+platform, to **all open source repositories on
+link:https://github.com[GitHub]**.
 
-. Blue Ocean
-. GitHub Branch Source
-. Pipeline
-. ???
+With a regularly updated "Jenkins distribution," consisting of many of the key
+plugins which people use, built from `master`, and rolled through the Code
+Valet cluster. Providing rapid, real-world, usage of Jenkins code.
 
-== Adding Plugins
+=== Goals
 
-The Jenkins masters which run in the Code Valet cluster will take the
-link:https://ci.jenkins.io/blue/organizations/jenkins/Core%2Fjenkins/activity?branch=master[latest core build]
-and build the `master` branch of all the plugins listed in `plugins.txt` in
-this repository, and all of those plugins' dependencies.
-
-In order to propose a new plugin, submit a pull request editing `plugins.txt`
-with the name of the plugin repository under
-link:https://github.com/jenkinsci[github.com/jenkinsci/].
-
-
-== Architecture
-
-WARNING: This is most definitely not set in stone
-
-
-=== Control Plane
-
-
-A Kubernetes cluster which will act as the control plane
-
-
-=== Management
-
-A webapp which acts as the primary controller, user interface for non-Jenkins
-specific tasks:
-
-. Surfacing *publicly readable* logs from the Jenkins masters
-.. Searchable logs for exceptions, etc
-.. Roll-ups of common exceptions by plugin, etc
-. Listing statistics from the other running Jenkins masters
-.. Number of Pipelines active
-
-=== Jenkins
-
-Each GitHub user will have a per-user allocated Jenkins master which executes
-as a container in this control plane. For example: `rtyler.codevalet.io` would
-contain all the Pipelines which can be found inside of
-`https://github.com/rtyler`
-
-To start, new Jenkins masters will be configured manual (beta testing!) and
-users will have access primarily through to
-link:https://jenkins.io/projects/blueocean[Blue Ocean], but will **not** be
-given administrative access to the Jenkins master.
-
-
-Groovy scripting will set up some VM templates which will provide dynamically
-provisioned agents in a cloud provider such as Azure, with a fixed quota, i.e.
-2 active machines per.
+. Provide a rapid feedback loop for Jenkins developers through real-world usage.
+. Introduce new people to the wonders of
+  link:https://jenkins.io/doc/book/pipeline[Jenkins Pipeline] and
+  link:https://jenkins.io/projects/blueocean[Blue Ocean].
 
 
 == Success Stories

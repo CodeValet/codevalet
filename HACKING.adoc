@@ -1,0 +1,41 @@
+= Hacking Code Valet
+
+
+== Architecture
+
+WARNING: This is most definitely not set in stone
+
+
+=== Control Plane
+
+
+A Kubernetes cluster which will act as the control plane
+
+
+=== Management
+
+A webapp which acts as the primary controller, user interface for non-Jenkins
+specific tasks:
+
+. Surfacing *publicly readable* logs from the Jenkins masters
+.. Searchable logs for exceptions, etc
+.. Roll-ups of common exceptions by plugin, etc
+. Listing statistics from the other running Jenkins masters
+.. Number of Pipelines active
+
+=== Jenkins
+
+Each GitHub user will have a per-user allocated Jenkins master which executes
+as a container in this control plane. For example: `rtyler.codevalet.io` would
+contain all the Pipelines which can be found inside of
+`https://github.com/rtyler`
+
+To start, new Jenkins masters will be configured manual (beta testing!) and
+users will have access primarily through to
+link:https://jenkins.io/projects/blueocean[Blue Ocean], but will **not** be
+given administrative access to the Jenkins master.
+
+
+Groovy scripting will set up some VM templates which will provide dynamically
+provisioned agents in a cloud provider such as Azure, with a fixed quota, i.e.
+2 active machines per.
