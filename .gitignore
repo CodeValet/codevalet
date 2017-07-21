@@ -3,3 +3,5 @@ build/
 .*.json
 terraform.tfstate*
 .terraform*
+.kube/
+ssh_key/
