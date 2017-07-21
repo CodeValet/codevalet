@@ -14,7 +14,17 @@ master: Dockerfile.master build/git-refs.txt
 build/git-refs.txt:
 	./scripts/record-sha1sums
 
+plan: validate
+	./scripts/terraform plan --var-file=.terraform.json plans
+
+validate: plans/*.tf
+	./scripts/terraform validate plans
+
+deploy: plan
+	./scripts/terraform apply --var-file=.terraform.json plans
+
+
 clean:
 	rm -f build/git-refs.txt
 
-.PHONY: clean all plugins master builder
+.PHONY: clean all plugins master builder plan validate deploy

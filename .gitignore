@@ -1,2 +1,5 @@
 *.sw*
 build/
+.*.json
+terraform.tfstate*
+.terraform*
