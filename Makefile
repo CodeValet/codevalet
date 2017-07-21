@@ -2,7 +2,7 @@ IMAGE_PREFIX="rtyler/codevalet"
 
 all: plugins master
 
-plugins: ./scripts/build-plugins builder
+plugins: ./scripts/build-plugins plugins.txt builder
 	./scripts/build-plugins
 
 builder: Dockerfile.builder
@@ -24,7 +24,23 @@ deploy: plan
 	./scripts/terraform apply --var-file=.terraform.json plans
 
 
+generate-k8s: monkeys.txt k8s/generated
+	@for m in $(shell cat monkeys.txt); do \
+		echo ">> Generating kubernetes resources for $$m" ; \
+		cat k8s/jenkins.yaml.template | sed "s/@@USER@@/$$m/" > k8s/generated/$$m.yaml ; \
+	done;
+
+deploy-k8s: generate-k8s
+	@for f in k8s/generated/*.yaml; do \
+		echo ">> Provisioning resources from $$f"; \
+		./scripts/kubectl create -f $$f  ; \
+	done;
+
+
+k8s/generated:
+	mkdir -p k8s/generated
+
 clean:
 	rm -f build/git-refs.txt
 
-.PHONY: clean all plugins master builder plan validate deploy
+.PHONY: clean all plugins master builder plan validate deploy generate-k8s deploy-k8s

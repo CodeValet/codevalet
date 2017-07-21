@@ -5,3 +5,4 @@ terraform.tfstate*
 .terraform*
 .kube/
 ssh_key/
+k8s/generated

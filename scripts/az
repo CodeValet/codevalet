@@ -24,7 +24,7 @@ fi;
 # https://github.com/docker/docker/issues/8513#issuecomment-90715369
 exec docker run --rm  -ti -u $(id -u):$(id -g) \
     -v ${HOME}/.azure:/.azure \
-    -v ${REPO_DIR}/ssh_key:/.ssh \
+    -v ${HOME}/.ssh:/.ssh \
     -e LOGNAME=$LOGNAME \
     -e USER=$USER \
     -v $PWD:/data \

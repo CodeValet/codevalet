@@ -25,6 +25,5 @@ exec docker run --rm  -u $(id -u):$(id -g) \
     -e LOGNAME=$LOGNAME \
     -e USER=$USER \
     -v $PWD:/data \
-    -p 8001:8001 \
     --workdir=/data \
     ${CONTAINER_NAME} $@
