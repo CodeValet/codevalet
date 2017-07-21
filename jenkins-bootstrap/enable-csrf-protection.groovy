@@ -8,7 +8,7 @@ import jenkins.model.*
 import hudson.security.csrf.*
 
 println "Checking CSRF protection..."
-if (instance.crumbIssuer == null) {
+if (Jenkins.instance.crumbIssuer == null) {
   println "Enabling CSRF protection"
-  instance.crumbIssuer = new DefaultCrumbIssuer(true)
+  Jenkins.instance.crumbIssuer = new DefaultCrumbIssuer(true)
 }
