@@ -1,0 +1,20 @@
+= Groovy bootstrap scripts for Jenkins
+
+This directory contains a number Groovy-based scripts which will execute when
+the Jenkins instances boot up, providing the baseline configuration required
+per instance.
+
+== Environment Variables
+
+The environment variables that these scripts need to be present when Jenkins
+executes are:
+
+=== GITHUB_USER
+
+The user on link:https://github.com[github.com] who should "own" this instance.
+This will automatically set up some permissions for the set `GITHUB_USER`
+
+=== CLIENT_SECRET
+
+The GitHub OAuth "Client Secret" for the OAuth Application which should be used
+for authentication against these Jenkins instances.
