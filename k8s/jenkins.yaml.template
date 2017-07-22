@@ -51,7 +51,6 @@ items:
               imagePullPolicy: Always
               ports:
                 - containerPort: 8080
-                - containerPort: 50000
               resources:
                 limits:
                   memory: 1G
@@ -114,10 +113,6 @@ items:
           name: "http"
           port: 80
           targetPort: 8080
-          protocol: "TCP"
-        -
-          name: "agent"
-          port: 50000
           protocol: "TCP"
   - apiVersion: extensions/v1beta1
     kind: Ingress
