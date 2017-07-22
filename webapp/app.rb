@@ -11,6 +11,8 @@ module CodeValet
     enable  :sessions
     enable  :raise_errors
 
+    set :public_folder, File.dirname(__FILE__) + '/assets'
+
     use Warden::Manager do |config|
       #config.failure_app = BadAuthentication
       config.default_strategies :github
