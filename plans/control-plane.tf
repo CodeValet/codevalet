@@ -29,7 +29,7 @@ resource "azurerm_container_service" "controlplane" {
 
   agent_pool_profile {
     name       = "k8s-agents"
-    count      = 1
+    count      = "${var.k8s_agents}"
     dns_prefix = "${var.prefix}-k8s-agent"
     vm_size    = "Standard_DS2_v2"
   }

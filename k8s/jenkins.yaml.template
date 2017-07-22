@@ -81,7 +81,7 @@ items:
                 - name: GITHUB_USER
                   value: @@USER@@
                 - name: CLIENT_SECRET
-                  valueFrom: 
+                  valueFrom:
                     secretKeyRef:
                       name: oauth
                       key: secret
@@ -128,11 +128,12 @@ items:
         kubernetes.io/ingress.class: "nginx"
     spec:
       rules:
-      - host: 
+      - host:
         http:
           paths:
           - path: /
             backend:
               serviceName: 'jenkins-@@USER@@'
               servicePort: 80
-              # vim: ft=yaml
+
+# vim: ft=yaml

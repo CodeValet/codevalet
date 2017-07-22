@@ -4,7 +4,21 @@ variable "subscription_id" {}
 variable "client_id" {}
 variable "client_secret" {}
 variable "tenant_id" {}
-variable "prefix" {}
+
+variable "prefix" {
+    type    = "string"
+    default = "codevaletdev"
+}
+
+variable "env" {
+    type    = "string"
+    default = "dev"
+}
+
+variable "k8s_agents" {
+    type    = "string"
+    default = "1"
+}
 
 provider "azurerm" {
     subscription_id = "${var.subscription_id}"
