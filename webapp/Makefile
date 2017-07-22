@@ -1,4 +1,6 @@
 
+check: depends
+
 all: depends
 
 depends: Gemfile
@@ -10,4 +12,4 @@ run: depends
 clean:
 	rm -rf vendor
 
-.PHONY: all depends clean run
+.PHONY: all depends clean run check
