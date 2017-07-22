@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 exec docker run --rm -ti \
     -u $(id -u):$(id -g) \
@@ -9,4 +9,5 @@ exec docker run --rm -ti \
     -e BUNDLE_PATH=${PWD}/vendor/gems \
     -e BUNDLE_APP_CONFIG=${PWD}/vendor/gems/.bundle \
     -e BUNDLE_DISABLE_SHARED_GEMS=true \
+    -p 9292:9292 \
     ruby $@

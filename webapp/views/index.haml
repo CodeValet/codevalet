@@ -1,0 +1,19 @@
+!!! XML
+!!!
+%html
+  %head
+    %meta{:name => 'referrer', :content => 'no-referrer'}/
+    %title
+      Code Valet
+  %body
+    %h1
+      Hello
+    %p
+      - if env['warden'].user
+        = env['warden'].user.login
+        %p
+          %a{:href => '/github/logout'}
+            Logout
+      - else
+        %a{:href => '/login'}
+          Log in
