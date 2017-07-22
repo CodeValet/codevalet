@@ -31,7 +31,7 @@ def authorization = new GithubAuthorizationStrategy("rtyler", /* Administrator u
 
 def realm = new GithubSecurityRealm('https://github.com',           /* GitHub web URI */
                                     'https://api.github.com',       /* GitHub API URI */
-                                    'f19661554c93f3b11cfe',         /* OAuth Client ID */
+                                    System.env.get('CLIENT_ID') ?: 'f19661554c93f3b11cfe',         /* OAuth Client ID */
                                     System.env.get('CLIENT_SECRET'),/* OAuth Client Secret */
                                     'read:org,user:email'           /* OAuth permission scopes */
                                     )
