@@ -32,7 +32,7 @@ def authorization = new GithubAuthorizationStrategy("rtyler", /* Administrator u
 def realm = new GithubSecurityRealm('https://github.com',           /* GitHub web URI */
                                     'https://api.github.com',       /* GitHub API URI */
                                     System.env.get('CLIENT_ID') ?: 'f19661554c93f3b11cfe',         /* OAuth Client ID */
-                                    System.env.get('CLIENT_SECRET'),/* OAuth Client Secret */
+                                    System.env.get('CLIENT_SECRET') ?: '0672e14addb9f41dec11b5da1219017edfc82a58',/* OAuth Client Secret */
                                     'read:org,user:email'           /* OAuth permission scopes */
                                     )
 Jenkins.instance.authorizationStrategy = authorization
