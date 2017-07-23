@@ -17,7 +17,7 @@ resource "azurerm_container_service" "controlplane" {
 
   master_profile {
     count      = 1
-    dns_prefix = "${var.prefix}-k8s-master"
+    dns_prefix = "${var.k8s_master_name}"
   }
 
   linux_profile {

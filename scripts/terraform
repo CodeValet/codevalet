@@ -25,7 +25,8 @@ fi;
 exec docker run --rm  -u $(id -u):$(id -u) \
     ${ADDITIONAL_ARGS} \
     ${TTY_ARGS} \
+    -e HOME=/data \
     -v $PWD:/data \
-    --workdir=/data \
+    -w /data \
     $(printenv | grep -i \^tf | awk '{ print "-e", $1 }') \
     ${CONTAINER_NAME} $@
