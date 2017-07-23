@@ -1,6 +1,6 @@
 IMAGE_PREFIX="rtyler/codevalet"
 
-check: generate-k8s plans
+check: generate plans
 	$(MAKE) -C webapp check
 
 all: plugins master
@@ -17,14 +17,22 @@ master: Dockerfile.master build/git-refs.txt
 build/git-refs.txt:
 	./scripts/record-sha1sums
 
+validate: plans/*.tf generate-tfs
+	./scripts/terraform validate plans
+
 plan: validate
 	./scripts/terraform plan --var-file=.terraform.json plans
 
-validate: plans/*.tf
-	./scripts/terraform validate plans
-
 deploy: plan
 	./scripts/terraform apply --var-file=.terraform.json plans
+
+generate: generate-tfs generate-k8s
+
+generate-tfs: monkeys.txt plans/generated
+	@for m in $(shell cat monkeys.txt); do \
+		echo ">> Generating Terraform resources for $$m" ; \
+		cat plans/master.tf.template | sed "s/@@USER@@/$$m/" > plans/generated.$$m.tf ; \
+	done;
 
 generate-k8s: monkeys.txt k8s/generated
 	@for m in $(shell cat monkeys.txt); do \
@@ -56,4 +64,4 @@ clean:
 	$(MAKE) -C webapp clean
 
 .PHONY: clean all plugins master builder plan validate \
-	deploy generate-k8s deploy-k8s webapp check
+	deploy generate-k8s deploy-k8s webapp check generate-tfs generate

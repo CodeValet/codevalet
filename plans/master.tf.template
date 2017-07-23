@@ -15,7 +15,7 @@ resource "azurerm_dns_a_record" "@@USER@@_arecord" {
   zone_name           = "${azurerm_dns_zone.root.name}"
   resource_group_name = "${azurerm_resource_group.controlplane.name}"
   ttl                 = "300"
-  records             = ["${azurerm_public_ip.@@USER@@_ip.ip_address"]
+  records             = ["${azurerm_public_ip.@@USER@@_ip.ip_address}"]
 }
 
 resource "kubernetes_service" "jenkins_@@USER@@" {
@@ -27,7 +27,7 @@ resource "kubernetes_service" "jenkins_@@USER@@" {
 
     type = "LoadBalancer"
     selector {
-      App = "MyApp"
+      name = "jenkins-@@USER@@"
     }
     port {
       target_port = 8080
