@@ -17,4 +17,5 @@ ADD Gemfile* ${APP_DIR}/
 ADD app.rb ${APP_DIR}/
 ADD config.ru ${APP_DIR}/
 ADD views ${APP_DIR}/views/
+ADD assets ${APP_DIR}/assets/
 CMD bundle exec rackup -o 0.0.0.0
