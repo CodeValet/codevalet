@@ -26,6 +26,11 @@ items:
               imagePullPolicy: Always
               ports:
                 - containerPort: 9292
+              env:
+                - name: PRODUCTION
+                  value: 'true'
+                - name: REDIRECT_URI
+                  value: 'http://codevalet.io'
               livenessProbe:
                 httpGet:
                   path: /
