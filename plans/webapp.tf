@@ -32,6 +32,7 @@ resource "kubernetes_service" "webapp" {
     selector {
       name = "webapp"
     }
+    session_affinity = "ClientIP"
     port {
       target_port = 9292
       port = 80
