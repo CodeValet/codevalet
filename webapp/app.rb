@@ -31,6 +31,11 @@ module CodeValet
       def production?
         !! ENV['PRODUCTION']
       end
+
+      def masters
+        file_path = File.expand_path(File.dirname(__FILE__) + '/monkeys.txt')
+        @monkeys ||= File.open(file_path, 'r').readlines.map(&:chomp).sort
+      end
     end
 
     get '/' do
@@ -43,7 +48,7 @@ module CodeValet
           redirect to("http://localhost:8080/#{redirect_path}")
         end
       else
-        haml :index
+        haml :index, :locals => {:monkeys => masters}
       end
     end
 
