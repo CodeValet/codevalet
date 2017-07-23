@@ -35,7 +35,7 @@ module CodeValet
 
     get '/' do
       unless env['warden'].user.nil?
-        redirect_path = 'securityRealm/commenceLogin?from%F'
+        redirect_path = 'securityRealm/commenceLogin?from=%2Fblue'
         login = env['warden'].user.login
         if production?
           redirect to("http://#{login}.codevalet.io/#{redirect_path}")
