@@ -5,16 +5,27 @@ require 'warden/github'
 require 'yaml'
 
 module CodeValet
+  class AuthFailre < Sinatra::Base
+    get '/unauthenticated' do
+      status 403
+      <<-EOS
+      <h2>Unable to authenticate, sorry bud.</h2>
+      <p>#{env['warden'].message}</p>
+      EOS
+    end
+  end
+
   class App < Sinatra::Base
     include Warden::GitHub::SSO
 
     enable  :sessions
     enable  :raise_errors
+    disable :show_exceptions
 
     set :public_folder, File.dirname(__FILE__) + '/assets'
 
     use Warden::Manager do |config|
-      #config.failure_app = BadAuthentication
+      config.failure_app = AuthFailre
       config.default_strategies :github
       config.scope_defaults :default, :config => {
         :scope            => 'read:org,user:email',
