@@ -28,7 +28,7 @@ deploy: plan
 
 generate: generate-tfs generate-k8s
 
-generate-tfs: monkeys.txt plans/generated
+generate-tfs: monkeys.txt
 	@for m in $(shell cat monkeys.txt); do \
 		echo ">> Generating Terraform resources for $$m" ; \
 		cat plans/master.tf.template | sed "s/@@USER@@/$$m/" > plans/generated.$$m.tf ; \
