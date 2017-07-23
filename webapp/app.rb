@@ -30,7 +30,7 @@ module CodeValet
       config.scope_defaults :default, :config => {
         :scope            => 'read:org,user:email',
         :client_id        => ENV['GITHUB_CLIENT_ID'] || 'a6f2001b9e6c3fabf85c',
-        :client_secret    => ENV['GITHUB_CLIENT_SECRET'] || '0672e14addb9f41dec11b5da1219017edfc82a58',
+        :client_secret    => (ENV['GITHUB_CLIENT_SECRET'] || '0672e14addb9f41dec11b5da1219017edfc82a58').chomp,
         :redirect_uri     => ENV['REDIRECT_URI'] || 'http://localhost:9292/github/authenticate',
       }
 
