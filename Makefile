@@ -1,6 +1,6 @@
 IMAGE_PREFIX="rtyler/codevalet"
 
-check: generate plans
+check: generate plans validate
 	$(MAKE) -C webapp check
 
 all: plugins master
