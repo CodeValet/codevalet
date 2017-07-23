@@ -6,7 +6,7 @@
 
 resource "azurerm_resource_group" "controlplane" {
   name     = "${var.prefix}-controlplane"
-  location = "East US 2"
+  location = "${var.region}"
 }
 
 resource "azurerm_container_service" "controlplane" {

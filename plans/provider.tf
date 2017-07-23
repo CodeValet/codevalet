@@ -15,6 +15,11 @@ variable "env" {
     default = "dev"
 }
 
+variable "region" {
+    type    = "string"
+    default = "East US 2"
+}
+
 variable "k8s_agents" {
     type    = "string"
     default = "1"

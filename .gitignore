@@ -6,3 +6,4 @@ terraform.tfstate*
 .kube/
 ssh_key/
 k8s/generated
+plans/generated
