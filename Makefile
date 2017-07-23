@@ -1,7 +1,7 @@
 IMAGE_PREFIX="rtyler/codevalet"
 
-check: plan generate-k8s
-	$(MAKE) -C webapp
+check: generate-k8s plans
+	$(MAKE) -C webapp check
 
 all: plugins master
 
@@ -53,6 +53,7 @@ webapp:
 
 clean:
 	rm -f build/git-refs.txt k8/generated
+	$(MAKE) -C webapp clean
 
 .PHONY: clean all plugins master builder plan validate \
 	deploy generate-k8s deploy-k8s webapp check

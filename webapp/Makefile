@@ -1,7 +1,7 @@
 
-check: depends container
-
 all: depends
+
+check: depends container
 
 depends: Gemfile
 	./scripts/ruby bundle install
