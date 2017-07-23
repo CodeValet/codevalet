@@ -19,6 +19,10 @@ resource "azurerm_dns_a_record" "@@USER@@_arecord" {
 }
 
 resource "kubernetes_service" "jenkins_@@USER@@" {
+  depends_on = [
+    "azurerm_container_service.controlplane",
+  ]
+
   metadata {
     name = "jenkins-@@USER@@"
   }
