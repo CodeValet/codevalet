@@ -41,6 +41,10 @@ generate-k8s: monkeys.txt k8s/generated
 	done;
 
 deploy-k8s: .kube/config generate-k8s
+	@for f in k8s/*.yaml; do \
+		echo ">> Provisioning resources from $$f"; \
+		./scripts/kubectl create -f $$f  ; \
+	done;
 	@for f in k8s/generated/*.yaml; do \
 		echo ">> Provisioning resources from $$f"; \
 		./scripts/kubectl create -f $$f  ; \
