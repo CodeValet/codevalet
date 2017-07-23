@@ -10,6 +10,11 @@ variable "prefix" {
     default = "codevaletdev"
 }
 
+variable "dnsprefix" {
+    type    = "string"
+    default = ""
+}
+
 variable "env" {
     type    = "string"
     default = "dev"
