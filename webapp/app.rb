@@ -51,37 +51,54 @@ module CodeValet
 
     get '/' do
       unless env['warden'].user.nil?
-        redirect_path = 'securityRealm/commenceLogin?from=%2Fblue'
-        login = env['warden'].user.login
-        if production?
-          redirect to("http://#{login}.codevalet.io/#{redirect_path}")
-        else
-          redirect to("http://localhost:8080/#{redirect_path}")
-        end
+        redirect to('/profile')
       else
-        haml :index, :locals => {:monkeys => masters}
+        haml :index, :layout => :_base, :locals => {:monkeys => masters}
+      end
+    end
+
+    get '/profile' do
+      unless env['warden'].user
+        redirect to('/')
+      else
+        haml :profile, :layout => :_base, :locals => {:user => env['warden'].user}
       end
     end
 
     get '/login' do
       env['warden'].authenticate!
-      redirect to('/')
+      redirect to('/profile')
     end
 
     get '/github/authenticate' do
-      # If we get to this point and have ?code then we're probably authing
-      # for Jenkins and have bounced through the matryoshka doll already
-      if params['code']
-        redirect_path = "securityRealm/finishLogin?code=#{params[:code]}"
+      puts request.inspect
+      env['warden'].authenticate!
+
+      if session[:jenkins] && env['warden'].user
+        session[:jenkins] = nil
+        redirect_path = "securityRealm/finishLogin?from=%2Fblue&#{env['QUERY_STRING']}"
+        href = "http://localhost:8080/#{redirect_path}"
         login = env['warden'].user.login
         if production?
-          redirect to("http://#{login}.codevalet.io/#{redirect_path}")
-        else
-          redirect to("http://localhost:8080/#{redirect_path}")
+          href = "http://#{login}.codevalet.io/#{redirect_path}"
         end
-      else
-        redirect '/'
+        redirect to(href)
       end
+      redirect '/profile'
+    end
+
+    get '/_to/jenkins' do
+      unless env['warden'].user
+        redirect to('/')
+      end
+      session[:jenkins] = true
+      login = env['warden'].user.login
+      redirect_path = 'securityRealm/commenceLogin?from=%2Fblue'
+      href = "http://localhost:8080/#{redirect_path}"
+      if production?
+        href = "http://#{login}.codevalet.io/#{redirect_path}"
+      end
+      redirect to(href)
     end
 
     get '/github/logout' do

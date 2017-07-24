@@ -1,0 +1,36 @@
+!!! XML
+!!!
+%html
+  %head
+    %meta{:name => 'referrer', :content => 'no-referrer'}/
+    %link{:rel => 'stylesheet',
+      :href => 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css',
+      :integrity => 'sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ',
+      :crossorigin => 'anonymous'}/
+    %script{:src => 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js',
+      :crossorigin => 'anonymous',
+      :integrity => 'sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn'}
+    %meta{:charset => 'utf-8'}/
+    %meta{:name => 'viewport',
+      :content => 'width=device-width, initial-scale=1, shrink-to-fit=no'}/
+    %title
+      Code Valet
+  %body
+    %nav.navbar.navbar-inverse.bg-danger.navbar-toggleable
+      %a.navbar-brand{:href => '/'}
+        %img{:src => '/images/monkey-128.png',
+          :width => '50', :height => '50', :alt => 'Max the Code Valet'}/
+        Code Valet
+      .navbar-collapse
+        .navbar-nav
+          - if env['warden'].user
+            %a.nav-item.active.nav-link{:href => '/profile'}
+              Profile
+            %a.nav-item.nav-link{:href => '/github/logout'}
+              Logout
+          - else
+            %a.nav-item.active.nav-link{:href => '/login'}
+              Log in
+
+    .container.mt-5
+      = yield
