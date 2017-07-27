@@ -74,7 +74,7 @@ Jenkins.instance.clouds.add(cloud)
 /* Nuke all our templates */
 cloud.clearVmTemplates()
 final String labels = 'docker linux ubuntu'
-final String agentWorkspace = '/home/jenkins/workspace'
+final String agentWorkspace = '/home/azureuser/workspace'
 final String retentionTime = '10'
 
 def imageReference = new AzureVMAgentTemplate.ImageReferenceTypeClass(
