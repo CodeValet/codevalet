@@ -84,6 +84,26 @@ items:
                     secretKeyRef:
                       name: oauth
                       key: secret
+                - name: AZURE_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: jenkins-masters
+                      key: azure_client_secret
+                - name: AZURE_CLIENT_IDT
+                  valueFrom:
+                    secretKeyRef:
+                      name: jenkins-masters
+                      key: azure_client
+                - name: AZURE_TENANT_IDT
+                  valueFrom:
+                    secretKeyRef:
+                      name: jenkins-masters
+                      key: azure_tenant
+                - name: AZURE_SUBSCRIPTION_IDT
+                  valueFrom:
+                    secretKeyRef:
+                      name: jenkins-masters
+                      key: azure_subscription
               volumeMounts:
                 - name: "jenkins-@@USER@@"
                   mountPath: "/var/jenkins_home"
