@@ -18,3 +18,12 @@ This will automatically set up some permissions for the set `GITHUB_USER`
 
 The GitHub OAuth "Client Secret" for the OAuth Application which should be used
 for authentication against these Jenkins instances.
+
+
+=== AZURE_TENANT_ID
+
+=== AZURE_SUBSCRIPTION_ID
+
+=== AZURE_CLIENT_ID
+
+=== AZURE_CLIENT_SECRET
