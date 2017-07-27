@@ -5,6 +5,11 @@
     - if monkeys.include? user.login
       %a{:href => '/_to/jenkins'}
         Log into Jenkins
+    - else
+      Sorry, no Jenkins environment has been provisioned for you. Please refer to the project's
+        %a{:href => 'https://github.com/rtyler/codevalet#joining-code-valet'}
+        README
+      for details on how to join.
 .container
   .row
     .col-md-6
