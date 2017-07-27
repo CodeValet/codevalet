@@ -2,8 +2,9 @@
   %p
     Hello #{user.login}
   %p
-    %a{:href => '/_to/jenkins'}
-      Log into Jenkins
+    - if monkeys.include? user.login
+      %a{:href => '/_to/jenkins'}
+        Log into Jenkins
 .container
   .row
     .col-md-6

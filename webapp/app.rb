@@ -61,7 +61,11 @@ module CodeValet
       unless env['warden'].user
         redirect to('/')
       else
-        haml :profile, :layout => :_base, :locals => {:user => env['warden'].user}
+        haml :profile, :layout => :_base,
+                       :locals => {
+                          :user => env['warden'].user,
+                          :monkeys => masters,
+                        }
       end
     end
 
