@@ -79,6 +79,8 @@ items:
                   value: "-Djenkins.install.runSetupWizard=false -Xmx$(MEM_REQUEST)m -Dhudson.slaves.NodeProvisioner.MARGIN=50 -Dhudson.slaves.NodeProvisioner.MARGIN0=0.85"
                 - name: GITHUB_USER
                   value: @@USER@@
+                - name: CLIENT_ID
+                  value: '790a28783a813e2b2b3c'
                 - name: CLIENT_SECRET
                   valueFrom:
                     secretKeyRef:
