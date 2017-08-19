@@ -22,11 +22,11 @@ if [ ! "${WORKSPACE}" = "" ]; then
     ADDITIONAL_ARGS="-v ${WORKSPACE}@tmp:${WORKSPACE}@tmp"
 fi;
 
-exec docker run --rm  -u $(id -u):$(id -u) \
+exec docker run --rm  -u $(id -u):$(id -g) \
     ${ADDITIONAL_ARGS} \
     ${TTY_ARGS} \
-    -e HOME=/data \
-    -v $PWD:/data \
-    -w /data \
+    -e HOME=$PWD \
+    -v $PWD:$PWD \
+    -w $PWD \
     $(printenv | grep -i \^tf | awk '{ print "-e", $1 }') \
     ${CONTAINER_NAME} $@
