@@ -22,7 +22,7 @@ def authorization = new GithubAuthorizationStrategy("rtyler", /* Administrator u
                                                     true,     /* Authenticated users can READ */
                                                     true,     /* Use the repository's permissions */
                                                     false,    /* Authenticated user's can CREATE */
-                                                    System.env.get('GITHUB_USER'), /* Collaborators */
+                                                    System.env.get('GITHUB_USER') ?: 'rtyler', /* Collaborators */
                                                     true,     /* Allow /github-webhook */
                                                     false,    /* All cctray's READ */
                                                     true,     /* Allow anonymous READ */
