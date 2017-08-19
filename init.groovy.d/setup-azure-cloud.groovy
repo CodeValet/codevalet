@@ -12,7 +12,7 @@ import com.cloudbees.plugins.credentials.*
 import com.cloudbees.plugins.credentials.impl.*
 import com.cloudbees.plugins.credentials.domains.Domain
 
-final String maxAgents                      = '1'
+final String maxAgents                      = '2'
 final String githubUser                     = System.env.get('GITHUB_USER') ?: 'max-the-code-monkey'
 final String resourceGroup                  = "azureagents-for-${githubUser}"
 final String credentialsId                  = 'azure-agents-credential'
