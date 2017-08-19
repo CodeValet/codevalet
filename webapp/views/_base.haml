@@ -19,18 +19,34 @@
     %nav.navbar.navbar-inverse.bg-danger.navbar-toggleable
       %a.navbar-brand{:href => '/'}
         %img{:src => '/images/monkey-128.png',
-          :width => '50', :height => '50', :alt => 'Max the Code Valet'}/
+          :width => '50', :height => '50', :alt => 'Max the Code Monkey'}/
         Code Valet
       .navbar-collapse
         .navbar-nav
+          %a.nav-item.nav-link{:href => 'https://p.datadoghq.com/sb/5a00f415f-76d1154160'}
+            Status
           - if env['warden'].user
             %a.nav-item.active.nav-link{:href => '/profile'}
               Profile
             %a.nav-item.nav-link{:href => '/github/logout'}
               Logout
           - else
-            %a.nav-item.active.nav-link{:href => '/login'}
+            %a.nav-item.nav-link{:href => '/login'}
               Log in
 
     .container.mt-5
       = yield
+
+    %hr/
+
+    .container
+      .row
+        %p
+          &copy; 2017
+          %a{:href => 'https://github.com/rtyler'}
+            R. Tyler Croy.
+      .row
+        %p
+          Jenkins&reg; is a registered trademark of
+          %a{:href => 'http://spi-inc.org'}
+            Software in the Public Interest, Inc.
