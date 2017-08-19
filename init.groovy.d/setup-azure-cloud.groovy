@@ -12,7 +12,9 @@ import com.cloudbees.plugins.credentials.*
 import com.cloudbees.plugins.credentials.impl.*
 import com.cloudbees.plugins.credentials.domains.Domain
 
+
 final String maxAgents                      = '2'
+final String cloudName                      = 'Azure'
 final String githubUser                     = System.env.get('GITHUB_USER') ?: 'max-the-code-monkey'
 final String resourceGroup                  = "azureagents-for-${githubUser}"
 final String credentialsId                  = 'azure-agents-credential'
@@ -57,18 +59,23 @@ if (principle.isBlank()) {
 }
 
 
-def cloud = new AzureVMCloud('Azure',            /* Cloud Name */
-                             /* Azure Credentials Id */
-                             AzureCredentials.getServicePrincipal(credentialsId),
-                             credentialsId,      /* credentials id */
-                             maxAgents,          /* Max Agents */
-                             '1200',             /* Deployment Timeout (s) */
-                             'new',              /* Resource group reference type */
-                             resourceGroup,      /* New resource group name */
-                             '',                 /* Existing resource group name */
-                             null)        /* VM Templates */
-Jenkins.instance.clouds.add(cloud)
 
+def cloud = Jenkins.instance.clouds.find { c -> c.name == cloudName }
+
+/* Avoid adding the AzureVMCloud over and over and over again */
+if (cloud == null) {
+    def cloud = new AzureVMCloud(cloudName,         /* Cloud Name */
+                                /* Azure Credentials Id */
+                                AzureCredentials.getServicePrincipal(credentialsId),
+                                credentialsId,      /* credentials id */
+                                maxAgents,          /* Max Agents */
+                                '1200',             /* Deployment Timeout (s) */
+                                'new',              /* Resource group reference type */
+                                resourceGroup,      /* New resource group name */
+                                '',                 /* Existing resource group name */
+                                null)        /* VM Templates */
+    Jenkins.instance.clouds.add(cloud)
+}
 
 
 /* Nuke all our templates */
