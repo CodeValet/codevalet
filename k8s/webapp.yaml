@@ -32,7 +32,7 @@ items:
                 - name: REDIRECT_URI
                   value: 'http://codevalet.io/github/authenticate'
                 - name: GITHUB_CLIENT_ID
-                  value: 'f19661554c93f3b11cfe'
+                  value: '790a28783a813e2b2b3c'
                 - name: GITHUB_CLIENT_SECRET
                   valueFrom:
                     secretKeyRef:
