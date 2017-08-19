@@ -91,17 +91,17 @@ items:
                     secretKeyRef:
                       name: jenkins-masters
                       key: azure_client_secret
-                - name: AZURE_CLIENT_IDT
+                - name: AZURE_CLIENT_ID
                   valueFrom:
                     secretKeyRef:
                       name: jenkins-masters
                       key: azure_client
-                - name: AZURE_TENANT_IDT
+                - name: AZURE_TENANT_ID
                   valueFrom:
                     secretKeyRef:
                       name: jenkins-masters
                       key: azure_tenant
-                - name: AZURE_SUBSCRIPTION_IDT
+                - name: AZURE_SUBSCRIPTION_ID
                   valueFrom:
                     secretKeyRef:
                       name: jenkins-masters
