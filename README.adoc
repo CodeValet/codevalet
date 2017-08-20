@@ -1,5 +1,7 @@
 = Code Valet
 
+image:https://badges.gitter.im/codevalet/codevalet.svg[Gitter, link=https://gitter.im/codevalet/codevalet]
+
 image::https://github.com/rtyler/codevalet/raw/master/assets/monkey-128.png[Code Valet is a Monkey]
 
 == Joining Code Valet
