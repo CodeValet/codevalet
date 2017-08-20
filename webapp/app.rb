@@ -50,11 +50,7 @@ module CodeValet
     end
 
     get '/' do
-      unless env['warden'].user.nil?
-        redirect to('/profile')
-      else
-        haml :index, :layout => :_base, :locals => {:monkeys => masters}
-      end
+      haml :index, :layout => :_base, :locals => {:monkeys => masters}
     end
 
     get '/profile' do
