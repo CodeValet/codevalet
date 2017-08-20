@@ -41,14 +41,21 @@
 
     .container
       .row
-        %p
-          &copy; 2017
-          %a{:href => 'https://github.com/rtyler'}
-            R. Tyler Croy.
-      .row
-        %p
-          %a{:href => 'https://github.com/codevalet'}
-            On GitHub
+        .col-md-6
+          %p
+            &copy; 2017
+            %a{:href => 'https://github.com/rtyler'}
+              R. Tyler Croy.
+        .col-md-6
+          %p.text-right
+            %a{:href => 'https://twitter.com/codevalet'}
+              %img{:src => '/images/twitter-32.png',
+                  :alt => 'Code Valet on Twitter',
+                  :title => 'Code Valet on Twitter'}/
+            %a{:href => 'https://github.com/codevalet'}
+              %img{:src => '/images/github-32.png',
+                  :alt => 'Code Valet on GitHub',
+                  :title => 'Code Valet on GitHub'}/
       .row
         %p
           Jenkins&reg; is a registered trademark of
