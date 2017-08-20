@@ -11,11 +11,14 @@
         instant feedback on bad commits, with minimal setup or configuration required.
       .alert.alert-warning
         Code Valet is currently in private alpha. If you’re interested in helping us alpha test, sign up for the Code Valet newsletter.
-        %form{:action => "https://tinyletter.com/codevalet", :method => "post", :onsubmit => "window.open('https://tinyletter.com/codevalet', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true", :style => "padding:3px;text-align:center;", :target => "popupwindow"}
-        %p
-          %input#tlemail{:name => "email", :style => "width:400px;", :type => "text"}/
-          %input{:name => "embed", :type => "hidden", :value => "1"}/
-          %input{:type => "submit", :value => "Subscribe"}/
+        .col-md-8
+          %form{:action => "https://tinyletter.com/codevalet", :method => "post", :onsubmit => "window.open('https://tinyletter.com/codevalet', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true", :style => "padding:3px;text-align:center;", :target => "popupwindow"}
+            %input{:name => "embed", :type => "hidden", :value => "1"}/
+            .input-group
+              %input.form-control#tlemail{:placeholder => 'Enter email address',
+                :name => "email",
+                :type => "text"}/
+              %input.btn{:type => "submit", :value => "Subscribe"}/
     .col-lg-12
       %h2
         Quickstart
