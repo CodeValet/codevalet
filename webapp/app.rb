@@ -86,6 +86,10 @@ module CodeValet
         href = "http://localhost:8080/#{redirect_path}"
         login = env['warden'].user.login
         if production?
+          if session[:admin_instance]
+            login = session[:admin_instance]
+            session[:admin_instance] = nil
+          end
           href = "http://#{login}.codevalet.io/#{redirect_path}"
         end
         redirect to(href)
@@ -104,6 +108,7 @@ module CodeValet
       if production?
         if admin? && params['instance']
           login = params['instance']
+          session[:admin_instance] = login
         end
         href = "http://#{login}.codevalet.io/#{redirect_path}"
       end
