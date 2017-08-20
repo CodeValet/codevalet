@@ -4,30 +4,29 @@
  */
 
 import jenkins.model.*
+import hudson.model.Item
+import org.jenkinsci.plugins.workflow.cps.replay.ReplayAction
 import org.jenkinsci.plugins.GithubAuthorizationStrategy
 import org.jenkinsci.plugins.GithubSecurityRealm
 
-/*
-  <securityRealm class="org.jenkinsci.plugins.GithubSecurityRealm">
-    <githubWebUri>https://github.com</githubWebUri>
-    <githubApiUri>https://api.github.com</githubApiUri>
-    <clientID>f19661554c93f3b11cfe</clientID>
-    <clientSecret>{AQAAABAAAAAwDYrTDXUKoO3rGPSKsA0n3hZA8YcEXPhz/CpGq3jRzpAfSvwl4oilxDL5PUQA12gCcpAyvV58fP+E9UC3pPsnNw==}</clientSecret>
-    <oauthScopes>read:org,user:email</oauthScopes>
-  </securityRealm>
-*/
+def authorization = new GlobalMatrixAuthorizationStrategy()
+authorization.add(Jenkins.READ, 'anonymous')
+authorization.add(Jenkins.ADMINISTER, 'rtyler')
 
-/* http://javadoc.jenkins.io/plugin/github-oauth/org/jenkinsci/plugins/GithubAuthorizationStrategy.html */
-def authorization = new GithubAuthorizationStrategy("rtyler", /* Administrator usernames */
-                                                    true,     /* Authenticated users can READ */
-                                                    true,     /* Use the repository's permissions */
-                                                    false,    /* Authenticated user's can CREATE */
-                                                    System.env.get('GITHUB_USER') ?: 'rtyler', /* Collaborators */
-                                                    true,     /* Allow /github-webhook */
-                                                    false,    /* All cctray's READ */
-                                                    true,     /* Allow anonymous READ */
-                                                    true      /* Allow anonymous VIEW_STATUS */
-                                                    )
+[
+    Jenkins.READ,
+    Item.BUILD,
+    Item.CANCEL,
+    Item.CONFIGURE,
+    Item.CREATE,
+    Item.DELETE,
+    Item.DISCOVER,
+    Item.READ,
+    ReplayAction.REPLAY,
+].each { permission ->
+    authorization.add(permission, System.env.get('GITHUB_USER') ?: 'rtyler')
+}
+
 
 def realm = new GithubSecurityRealm('https://github.com',           /* GitHub web URI */
                                     'https://api.github.com',       /* GitHub API URI */
@@ -37,4 +36,4 @@ def realm = new GithubSecurityRealm('https://github.com',           /* GitHub we
                                     )
 Jenkins.instance.authorizationStrategy = authorization
 Jenkins.instance.securityRealm = realm
-
+Jenkins.instance.save()
