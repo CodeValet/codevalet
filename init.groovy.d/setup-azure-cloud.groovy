@@ -60,11 +60,11 @@ if (principle.isBlank()) {
 
 
 
-def cloud = Jenkins.instance.clouds.find { c -> c.name == cloudName }
+def cloud = Jenkins.instance.clouds.find { it.name == cloudName }
 
 /* Avoid adding the AzureVMCloud over and over and over again */
 if (cloud == null) {
-    def cloud = new AzureVMCloud(cloudName,         /* Cloud Name */
+    cloud = new AzureVMCloud(cloudName,         /* Cloud Name */
                                 /* Azure Credentials Id */
                                 AzureCredentials.getServicePrincipal(credentialsId),
                                 credentialsId,      /* credentials id */
