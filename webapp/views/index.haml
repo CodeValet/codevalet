@@ -3,35 +3,24 @@
     .col-md-12
       %h2
         Meet Code Valet
+      %img{:src => '/images/monkey-128.png',
+           :title => 'Max the Code Monkey',
+           :align => :right}
       %p
-        Code Valet is a free and open source service which provides CI/CD
-        tooling for open source developers via:
-        %a{:href => 'https://jenkins.io'}
-          Jenkins&reg; 2
-        with
-        %a{:href => 'https://jenkins.io/doc/book/pipeline'}
-          Jenkins Pipeline
-        and
-        %a{:href => 'https://jenkins.io/project/blueocean'}
-          Blue Ocean.
+        Code Valet is a radically transparent CI/CD service for GitHub users. Get 
+        instant feedback on bad commits, with minimal setup or configuration required.
+      .alert.alert-warning
+        Code Valet is currently in private alpha. If you’re interested in helping us 
+        alpha test, sign up for the Code Valet newsletter.
+
   .row
     .col-lg-12
+      %h2
+        Quickstart
       %p
-        Integrating with Code Valet is as simple as importing an existing
-        %code
-          Jenkinsfile
-        from a source repository, or creating a new
-        %code
-          Jenkinsfile
-        and checking it into an open source
-        %a{:href => 'https://github.com/'}
-          GitHub
-        repository.  Building off of existing open source tools and
-        technologies, Code Valet users have maximum flexibility, along with the
-        latest features and fixes, for their projects.
-
-      .alert.alert-warning
-        Code Valet is currently in private alpha.
+        Integrating with Code Valet is easy. To get started, sign up with your GitHub 
+        account, select a project to build, and define how to build it, either visually 
+        or declaratively.
 
       %img.img-fluid{:src => '/images/create-new-pipeline.png'}
 
@@ -39,11 +28,29 @@
     .col-md-12
       %h2
         How it works
-      %img{:src => '/images/monkey-128.png',
-           :title => 'Max the Code Monkey',
-           :align => :right}
       %p
-        One of the goals of Code Valet is to provide the Jenkins project with
+        Code Valet is powered by
+        %a{:href => 'https://jenkins.io'}
+          Jenkins&reg; 2
+        with
+        %a{:href => 'https://jenkins.io/doc/book/pipeline'}
+          Jenkins Pipeline
+        and
+        %a{:href => 'https://jenkins.io/project/blueocean'}
+          Blue Ocean, but no prior Jenkins knowledge is required to use Code Valet.
+      %p
+        Code Valet uses its own regularly updated "Jenkins
+        distribution" consisting of many commonly used
+        %a{:href => 'https://plugins.jenkins.io'}
+          plugins
+        built from their "master" branches.
+
+  .row
+    .col-md-12
+      %h2
+        Success stories
+      %p
+        Code Valet provides the Jenkins project with
         rapid feedback based on real-world usage of Jenkins. This means rather
         than following the Jenkins project's
         %a{:href => 'https://en.wikipedia.org/wiki/Software_release_train'}
@@ -52,8 +59,6 @@
         %a{:href => 'https://en.wikipedia.org/wiki/Continuous_delivery'}
           continuous delivery model.
       %p
-        To that end, Code Valet builds a regularly updated "Jenkins
-        distribution" consisting of many commonly used
-        %a{:href => 'https://plugins.jenkins.io'}
-          plugins
-        built from their "master" branches,
+        Using Code Valet ultimately helps the Jenkins community improve its support 
+        for wider variety of platforms by increasing the diversity of projects built 
+        by Jenkins.
