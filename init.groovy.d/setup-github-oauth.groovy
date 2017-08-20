@@ -4,6 +4,7 @@
  */
 
 import jenkins.model.*
+import hudson.security.*
 import hudson.model.Item
 import org.jenkinsci.plugins.workflow.cps.replay.ReplayAction
 import org.jenkinsci.plugins.GithubAuthorizationStrategy
