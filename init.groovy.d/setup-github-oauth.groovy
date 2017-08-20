@@ -16,6 +16,7 @@ import org.jenkinsci.plugins.GithubSecurityRealm
 
 def authorization = new GlobalMatrixAuthorizationStrategy()
 authorization.add(Jenkins.READ, 'anonymous')
+authorization.add(Item.READ, 'anonymous')
 authorization.add(Jenkins.ADMINISTER, 'rtyler')
 
 [
