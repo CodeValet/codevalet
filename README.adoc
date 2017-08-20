@@ -6,9 +6,9 @@ image::https://github.com/rtyler/codevalet/raw/master/assets/monkey-128.png[Code
 
 == Joining Code Valet
 
-In order to join the (alpha) for Code Valet, submit a pull request adding your
-username to `monkeys.txt`.
-
+Currently Code Valet is in private alpha, to receive updates on our progress
+and join the private alpha/public beta, please sign up for
+link:https://tinyletter.com/codevalet[our newsletter].
 
 == Adding Plugins
 
