@@ -47,6 +47,11 @@ module CodeValet
         file_path = File.expand_path(File.dirname(__FILE__) + '/monkeys.txt')
         @monkeys ||= File.open(file_path, 'r').readlines.map(&:chomp).sort
       end
+
+      def admin?
+        return false unless env['warden'].user
+        return env['warden'].user.login == 'rtyler'
+      end
     end
 
     get '/' do
@@ -61,6 +66,7 @@ module CodeValet
                        :locals => {
                           :user => env['warden'].user,
                           :monkeys => masters,
+                          :admin => admin?,
                         }
       end
     end
@@ -96,6 +102,9 @@ module CodeValet
       redirect_path = 'securityRealm/commenceLogin?from=%2Fblue'
       href = "http://localhost:8080/#{redirect_path}"
       if production?
+        if admin? && params['instance']
+          login = params['instance']
+        end
         href = "http://#{login}.codevalet.io/#{redirect_path}"
       end
       redirect to(href)
