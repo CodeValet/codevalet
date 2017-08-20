@@ -10,10 +10,12 @@
         Code Valet is a radically transparent CI/CD service for GitHub users. Get 
         instant feedback on bad commits, with minimal setup or configuration required.
       .alert.alert-warning
-        Code Valet is currently in private alpha. If you’re interested in helping us 
-        alpha test, sign up for the Code Valet newsletter.
-
-  .row
+        Code Valet is currently in private alpha. If you’re interested in helping us alpha test, sign up for the Code Valet newsletter.
+        %form{:action => "https://tinyletter.com/codevalet", :method => "post", :onsubmit => "window.open('https://tinyletter.com/codevalet', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true", :style => "padding:3px;text-align:center;", :target => "popupwindow"}
+        %p
+          %input#tlemail{:name => "email", :style => "width:400px;", :type => "text"}/
+          %input{:name => "embed", :type => "hidden", :value => "1"}/
+          %input{:type => "submit", :value => "Subscribe"}/
     .col-lg-12
       %h2
         Quickstart
@@ -37,7 +39,8 @@
           Jenkins Pipeline
         and
         %a{:href => 'https://jenkins.io/project/blueocean'}
-          Blue Ocean, but no prior Jenkins knowledge is required to use Code Valet.
+          Blue Ocean
+        but no prior Jenkins knowledge is required to use Code Valet.
       %p
         Code Valet uses its own regularly updated "Jenkins
         distribution" consisting of many commonly used
