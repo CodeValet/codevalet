@@ -24,6 +24,7 @@ exec docker run --rm  -u $(id -u):$(id -g) \
     -v ${REPO_DIR}/ssh_key:/.ssh \
     -e LOGNAME=$LOGNAME \
     -e USER=$USER \
-    -v $PWD:/data \
-    --workdir=/data \
+    -v $REPO_DIR:$REPO_DIR \
+    -v $PWD:$PWD \
+    -w $PWD \
     ${CONTAINER_NAME} $@
