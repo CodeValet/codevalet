@@ -3,6 +3,10 @@
  * Set up the basic GitHub OAuth permissions for this instance
  */
 
+if (System.env.get('SUPER_DANGEROUS_LOCAL_ONLY_DISABLE_AUTH')) {
+    return
+}
+
 import jenkins.model.*
 import hudson.security.*
 import hudson.model.Item
