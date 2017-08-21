@@ -6,6 +6,10 @@ USER jenkins
 
 ADD build/plugins/*.hpi /usr/share/jenkins/ref/plugins/
 ADD init.groovy.d/*.groovy /usr/share/jenkins/ref/init.groovy.d/
+# Link all our files with .override as the suffix to ensure copy_reference_file
+# overrides any existing versions on the persistent volume. Basically, we
+# always want the init.groovy.d/ in the container to win.
+RUN for f in /usr/share/jenkins/ref/init.groovy.d/*.groovy; do ln -s $f $f.override ; done
 
 RUN mkdir /usr/share/jenkins/ref/userContent
 RUN date > /usr/share/jenkins/ref/userContent/builtOn.txt
