@@ -3,9 +3,12 @@
 pipeline {
     agent { label 'linux' }
     stages {
-        stage('Build') {
+        stage('Validate Terraform') {
             steps {
-                echo 'Nothing to do here just yet'
+                echo 'Validating Terraform'
+                sh 'make validate'
+                echo 'Making sure we can generate our Kubernetes configurations'
+                sh 'make generate-k8s'
             }
         }
         stage('Test') {
