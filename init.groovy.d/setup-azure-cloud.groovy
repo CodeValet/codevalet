@@ -113,7 +113,7 @@ def t = new AzureVMAgentTemplate('ubuntu-1604-docker', /* template name */
                                  imageReference, /* image reference class */
                                  'SSH', /* agent launch method */
                                  true, /* pre install SSH */
-                                 '', /* init script */
+                                 'usermod -aG docker azureuser', /* init script */
                                  adminCredentialsId, /* admin credential Id */
                                  '', /* virtual network name */
                                  '', /* virtual network resource group name */
