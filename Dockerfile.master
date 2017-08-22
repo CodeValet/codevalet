@@ -16,5 +16,9 @@ RUN date > /usr/share/jenkins/ref/userContent/builtOn.txt
 ADD build/git-refs.txt /usr/share/jenkins/ref/userContent
 RUN for f in /usr/share/jenkins/ref/userContent/*.txt; do ln -s $f $f.override ; done
 
+# Needed for Sentry integration.
+RUN curl -sSL https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.9.0/jackson-core-2.9.0.jar > /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/jackson-core-2.9.0.jar
+RUN curl -sSL https://repo1.maven.org/maven2/io/sentry/sentry/1.5.0/sentry-1.5.0.jar > /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/sentry-1.5.0.jar
+
 ENV JAVA_OPTS=-Djenkins.install.runSetupWizard=false
 USER jenkins
