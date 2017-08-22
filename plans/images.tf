@@ -3,7 +3,7 @@
 #
 
 resource "azurerm_resource_group" "images" {
-  name     = "${var.prefix}-codevalet-images"
+  name     = "azureagents-for-codevalet"
   location = "${var.region}"
 }
 

@@ -3,7 +3,6 @@
 /*
  * Set up the Azure VM Cloud plugin
  */
-
 import jenkins.model.*
 import com.microsoft.azure.vmagent.*
 import com.microsoft.azure.util.*
@@ -16,7 +15,7 @@ import com.cloudbees.plugins.credentials.domains.Domain
 final String maxAgents                      = '2'
 final String cloudName                      = 'Azure'
 final String githubUser                     = System.env.get('GITHUB_USER') ?: 'max-the-code-monkey'
-final String resourceGroup                  = "azureagents-for-${githubUser}"
+final String resourceGroup                  = "azureagents-for-codevalet"
 final String credentialsId                  = 'azure-agents-credential'
 final String adminCredentialsId             = 'azure-agent-admin-credential'
 final String tenantId                       = System.env.get('AZURE_TENANT_ID') ?: 'dummy-tenant-id'
@@ -58,8 +57,8 @@ if (principle.isBlank()) {
     SystemCredentialsProvider.instance.store.addCredentials(Domain.global(), credential)
 }
 
-
-
+/* Nuke previous cloud configurations */
+Jenkins.instance.clouds.clear()
 def cloud = Jenkins.instance.clouds.find { it.name == cloudName }
 
 /* Avoid adding the AzureVMCloud over and over and over again */
@@ -70,9 +69,9 @@ if (cloud == null) {
                                 credentialsId,      /* credentials id */
                                 maxAgents,          /* Max Agents */
                                 '1200',             /* Deployment Timeout (s) */
-                                'new',              /* Resource group reference type */
-                                resourceGroup,      /* New resource group name */
-                                '',                 /* Existing resource group name */
+                                'existing',              /* Resource group reference type */
+                                null,      /* New resource group name */
+                                resourceGroup,                 /* Existing resource group name */
                                 null)        /* VM Templates */
     Jenkins.instance.clouds.add(cloud)
 }
@@ -85,7 +84,7 @@ final String agentWorkspace = '/home/azureuser/workspace'
 final String retentionTime = '10'
 
 def imageReference = new AzureVMAgentTemplate.ImageReferenceTypeClass(
-    'Ubuntu 16.04',
+    'https://codevaletvhds.blob.core.windows.net/system/Microsoft.Compute/Images/images/packer-osDisk.1988366a-5fa8-43de-8af1-f33158e2f352.vhd',
     'Canonical',
     'UbuntuServer',
     '16.04 LTS',
@@ -95,21 +94,21 @@ def imageReference = new AzureVMAgentTemplate.ImageReferenceTypeClass(
 def t = new AzureVMAgentTemplate('ubuntu-1604-docker', /* template name */
                                  'Azure-based Ubuntu 16.04 machine', /* description */
                                  labels, /* labels */
-                                 'East US', /* location */
+                                 'East US 2', /* location */
                                  'Standard_A4', /* VM Size */
-                                 'new', /* Storage account Name reference type */
+                                 '', /* Storage account Name reference type */
                                  'Standard_LRS', /* Storage account type */
                                  '', /* new storage account name */
-                                 '', /* existing storage account name */
-                                 'unmanaged', /* disk tyep */
+                                 'codevaletvhds', /* existing storage account name */
+                                 'unmanaged', /* disk type */
                                  '1', /* number of executors */
                                  'NORMAL', /* Usage mode */
                                  'Ubuntu 16.04 LTS', /* built-in image */
-                                 true, /* install git */
+                                 false, /* install git */
                                  false, /* install maven */
-                                 true, /* install docker */
+                                 false, /* install docker */
                                  'Linux', /* OS type */
-                                 'basic', /* image top level type */
+                                 '', /* image top level type */
                                  false, /* image reference? */
                                  imageReference, /* image reference class */
                                  'SSH', /* agent launch method */
@@ -130,4 +129,7 @@ def t = new AzureVMAgentTemplate('ubuntu-1604-docker', /* template name */
                                  true, /* execute init script as root */
                                  true /* do not use machine if init fails */
         )
+t.azureCloud = cloud
+println 'Verifying template'
+println t.verifyTemplate()
 cloud.addVmTemplate(t)
