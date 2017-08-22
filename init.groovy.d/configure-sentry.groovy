@@ -15,7 +15,7 @@ Thread.start {
     println 'Waiting for 2 minutes for Jenkins to bootstrap before configuring Sentry'
     sleep 120
     while (true) {
-        LogManager.logManager.loggerNames.each { loggerName ->
+        LogManager.logManager.loggerNames.toList().each { loggerName ->
             def manager = LogManager.logManager.getLogger(loggerName)
 
             boolean found = false
