@@ -2,9 +2,9 @@ FROM jenkinsci/jenkins:alpine
 
 USER root
 RUN curl -sSL https://ci.jenkins.io/job/Core/job/jenkins/job/master/lastSuccessfulBuild/artifact/war/target/linux-jenkins.war  > /usr/share/jenkins/jenkins.war
-USER jenkins
 
 ADD build/plugins/*.hpi /usr/share/jenkins/ref/plugins/
+RUN for f in /usr/share/jenkins/ref/plugins/*.hpi; do ln -s $f $f.override ; done
 ADD init.groovy.d/*.groovy /usr/share/jenkins/ref/init.groovy.d/
 # Link all our files with .override as the suffix to ensure copy_reference_file
 # overrides any existing versions on the persistent volume. Basically, we
@@ -14,5 +14,7 @@ RUN for f in /usr/share/jenkins/ref/init.groovy.d/*.groovy; do ln -s $f $f.overr
 RUN mkdir /usr/share/jenkins/ref/userContent
 RUN date > /usr/share/jenkins/ref/userContent/builtOn.txt
 ADD build/git-refs.txt /usr/share/jenkins/ref/userContent
+RUN for f in /usr/share/jenkins/ref/userContent/*.txt; do ln -s $f $f.override ; done
 
 ENV JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+USER jenkins
