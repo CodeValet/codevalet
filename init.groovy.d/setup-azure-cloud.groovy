@@ -3,6 +3,7 @@
 /*
  * Set up the Azure VM Cloud plugin
  */
+
 import jenkins.model.*
 import com.microsoft.azure.vmagent.*
 import com.microsoft.azure.util.*
@@ -57,7 +58,7 @@ if (principle.isBlank()) {
     SystemCredentialsProvider.instance.store.addCredentials(Domain.global(), credential)
 }
 
-/* Nuke previous cloud configurations */
+
 Jenkins.instance.clouds.clear()
 def cloud = Jenkins.instance.clouds.find { it.name == cloudName }
 
@@ -85,17 +86,17 @@ final String retentionTime = '10'
 
 def imageReference = new AzureVMAgentTemplate.ImageReferenceTypeClass(
     'https://codevaletvhds.blob.core.windows.net/system/Microsoft.Compute/Images/images/packer-osDisk.1988366a-5fa8-43de-8af1-f33158e2f352.vhd',
-    'Canonical',
-    'UbuntuServer',
-    '16.04 LTS',
-    'latest')
+    '',
+    '',
+    '',
+    '')
 
 /* Add templates */
 def t = new AzureVMAgentTemplate('ubuntu-1604-docker', /* template name */
                                  'Azure-based Ubuntu 16.04 machine', /* description */
                                  labels, /* labels */
                                  'East US 2', /* location */
-                                 'Standard_A4', /* VM Size */
+                                 'Standard_DS4_v2', /* VM Size */
                                  '', /* Storage account Name reference type */
                                  'Standard_LRS', /* Storage account type */
                                  '', /* new storage account name */
@@ -103,16 +104,16 @@ def t = new AzureVMAgentTemplate('ubuntu-1604-docker', /* template name */
                                  'unmanaged', /* disk type */
                                  '1', /* number of executors */
                                  'NORMAL', /* Usage mode */
-                                 'Ubuntu 16.04 LTS', /* built-in image */
+                                 '', /* built-in image */
                                  false, /* install git */
                                  false, /* install maven */
                                  false, /* install docker */
                                  'Linux', /* OS type */
-                                 '', /* image top level type */
-                                 false, /* image reference? */
+                                 'custom', /* image top level type */
+                                 true, /* image reference? */
                                  imageReference, /* image reference class */
                                  'SSH', /* agent launch method */
-                                 true, /* pre install SSH */
+                                 false, /* pre install SSH */
                                  'usermod -aG docker azureuser', /* init script */
                                  adminCredentialsId, /* admin credential Id */
                                  '', /* virtual network name */
@@ -130,6 +131,5 @@ def t = new AzureVMAgentTemplate('ubuntu-1604-docker', /* template name */
                                  true /* do not use machine if init fails */
         )
 t.azureCloud = cloud
-println 'Verifying template'
 println t.verifyTemplate()
 cloud.addVmTemplate(t)
