@@ -81,6 +81,11 @@ items:
                   value: @@USER@@
                 - name: CLIENT_ID
                   value: '790a28783a813e2b2b3c'
+                - name: SENTRY_DSN
+                  valueFrom:
+                    secretKeyRef:
+                      name: jenkins-masters
+                      key: sentry
                 - name: CLIENT_SECRET
                   valueFrom:
                     secretKeyRef:
