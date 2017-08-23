@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 pipeline {
-    agent { label 'linux' }
+    agent { label 'linux && docker' }
     stages {
         stage('Validate Terraform') {
             steps {
@@ -11,10 +11,20 @@ pipeline {
                 sh 'make generate-k8s'
             }
         }
+        stage('Create builder') {
+            steps {
+                sh 'make builder'
+            }
+        }
         stage('Test') {
             steps {
                 echo 'Maybe rtyler will write some tests'
             }
+        }
+    }
+    post {
+        always {
+            sh 'make clean'
         }
     }
 }
