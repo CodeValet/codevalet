@@ -30,6 +30,9 @@ function cloneWithDependencies() {
 
 pushd $REPOS_DIR
 
+  # Grab the hacked up Sentry plugin of ours
+  git clone --depth 1 git://github.com/codevalet/sentry-plugin.git
+
   # pubsub-light-module is a plugin but not called a plugin
   git clone --depth 1 git://github.com/jenkinsci/pubsub-light-module.git pubsub-light-plugin
 
