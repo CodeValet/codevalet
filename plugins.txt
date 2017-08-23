@@ -3,3 +3,4 @@ blueocean-plugin
 github-oauth-plugin
 azure-vm-agents-plugin
 matrix-auth-plugin
+embeddable-build-status-plugin
