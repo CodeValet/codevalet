@@ -16,6 +16,16 @@ pipeline {
                 sh 'make builder'
             }
         }
+        stage('Build necessary plugins') {
+            steps {
+                sh 'make plugins'
+            }
+        }
+        stage('Create master container') {
+            steps {
+                sh 'make master'
+            }
+        }
         stage('Test') {
             steps {
                 echo 'Maybe rtyler will write some tests'
