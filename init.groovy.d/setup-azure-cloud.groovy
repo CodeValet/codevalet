@@ -71,7 +71,7 @@ if (cloud == null) {
                                 maxAgents,          /* Max Agents */
                                 '1200',             /* Deployment Timeout (s) */
                                 'existing',              /* Resource group reference type */
-                                null,      /* New resource group name */
+                                '',      /* New resource group name */
                                 resourceGroup,                 /* Existing resource group name */
                                 null)        /* VM Templates */
     Jenkins.instance.clouds.add(cloud)
@@ -84,12 +84,8 @@ final String labels = 'docker linux ubuntu'
 final String agentWorkspace = '/home/azureuser/workspace'
 final String retentionTime = '10'
 
-def imageReference = new AzureVMAgentTemplate.ImageReferenceTypeClass(
-    'https://codevaletvhds.blob.core.windows.net/system/Microsoft.Compute/Images/images/packer-osDisk.1988366a-5fa8-43de-8af1-f33158e2f352.vhd',
-    '',
-    '',
-    '',
-    '')
+final String vhd = 'https://codevaletvhds.blob.core.windows.net/system/Microsoft.Compute/Images/images/packer-osDisk.1988366a-5fa8-43de-8af1-f33158e2f352.vhd'
+def imageReference = new AzureVMAgentTemplate.ImageReferenceTypeClass(vhd, vhd, vhd, vhd, vhd)
 
 /* Add templates */
 def t = new AzureVMAgentTemplate('ubuntu-1604-docker', /* template name */
@@ -97,7 +93,7 @@ def t = new AzureVMAgentTemplate('ubuntu-1604-docker', /* template name */
                                  labels, /* labels */
                                  'East US 2', /* location */
                                  'Standard_DS4_v2', /* VM Size */
-                                 '', /* Storage account Name reference type */
+                                 'existing', /* Storage account Name reference type */
                                  'Standard_LRS', /* Storage account type */
                                  '', /* new storage account name */
                                  'codevaletvhds', /* existing storage account name */
@@ -110,7 +106,7 @@ def t = new AzureVMAgentTemplate('ubuntu-1604-docker', /* template name */
                                  false, /* install docker */
                                  'Linux', /* OS type */
                                  'custom', /* image top level type */
-                                 true, /* image reference? */
+                                 false, /* image reference? */
                                  imageReference, /* image reference class */
                                  'SSH', /* agent launch method */
                                  false, /* pre install SSH */
@@ -133,3 +129,4 @@ def t = new AzureVMAgentTemplate('ubuntu-1604-docker', /* template name */
 t.azureCloud = cloud
 println t.verifyTemplate()
 cloud.addVmTemplate(t)
+Jenkins.instance.save()
