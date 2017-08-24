@@ -138,7 +138,7 @@ def freeBsdImageReference = new AzureVMAgentTemplate.ImageReferenceTypeClass(fre
                                                                             freeBsdVhd,
                                                                             freeBsdVhd,
                                                                             freeBsdVhd)
-def t = new AzureVMAgentTemplate('freebsd-11', /* template name */
+t = new AzureVMAgentTemplate('freebsd-11', /* template name */
                                  'Azure-based FreeBSD 11.1 machine', /* description */
                                  'freebsd bsd', /* labels */
                                  'East US 2', /* location */
