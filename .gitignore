@@ -3,7 +3,7 @@ build/
 .*.json
 terraform.tfstate*
 .terraform*
-.kube/
+.kube
 ssh_key/
 k8s/generated
 plans/generated
