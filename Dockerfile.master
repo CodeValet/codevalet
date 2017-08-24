@@ -16,5 +16,5 @@ RUN date > /usr/share/jenkins/ref/userContent/builtOn.txt
 ADD build/git-refs.txt /usr/share/jenkins/ref/userContent
 RUN for f in /usr/share/jenkins/ref/userContent/*.txt; do ln -s $f $f.override ; done
 
-ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false -Dhudson.DNSMultiCast.disabled=true"
+ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false -Dhudson.DNSMultiCast.disabled=true -Djenkins.CLI.disabled=true"
 USER jenkins
