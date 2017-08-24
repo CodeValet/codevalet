@@ -8,7 +8,7 @@ import jenkins.model.Jenkins
 def gitConfig = Jenkins.instance.getDescriptor('hudson.plugins.git.GitSCM')
 def tools = Jenkins.instance.getDescriptor('hudson.plugins.git.GitTool')
 
-tools.installations = [new JGitTool()]
+tools.installations = []
 
 gitConfig.globalConfigName = 'max'
 gitConfig.globalConfigEmail = 'max@example.com'
