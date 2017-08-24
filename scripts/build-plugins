@@ -28,6 +28,12 @@ function cloneWithDependencies() {
   fi;
 }
 
+tty --quiet
+if [ $? -eq 0 ]; then
+    echo "We're interactive, adjusting the Docker arguments accordingly";
+    TTY_ARGS="-ti";
+fi;
+
 pushd $REPOS_DIR
 
   # Grab the hacked up Sentry plugin of ours
@@ -55,7 +61,7 @@ pushd $REPOS_DIR
         if [ -f pom.xml ]; then
           echo ">> Building $d"
           git pull --rebase
-          docker run --rm -ti -v $HOME/.m2:/root/.m2 \
+          docker run --rm ${TTY_ARGS} -v $HOME/.m2:/root/.m2 \
             -v $PWD:/data -w /data ${BUILDER_CONTAINER} mvn install -DskipTests
         fi;
       popd
