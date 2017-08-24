@@ -62,7 +62,7 @@ pushd $REPOS_DIR
           echo ">> Building $d"
           git pull --rebase
           docker run --rm ${TTY_ARGS} -v $HOME/.m2:/root/.m2 \
-            -v $PWD:/data -w /data ${BUILDER_CONTAINER} mvn install -DskipTests
+            -v $PWD:/data -w /data ${BUILDER_CONTAINER} mvn install -e -B -DskipTests
         fi;
       popd
   done;
