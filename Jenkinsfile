@@ -2,6 +2,11 @@
 
 pipeline {
     agent { label 'linux && docker' }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        timeout(time: 3, unit: 'HOURS')
+    }
+
     stages {
         stage('Validate Terraform') {
             steps {
@@ -24,6 +29,11 @@ pipeline {
         stage('Create master container') {
             steps {
                 sh 'make master'
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: 'build/git-refs.txt', fingerprint: true
+                }
             }
         }
         stage('Test') {
