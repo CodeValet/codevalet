@@ -76,7 +76,7 @@ items:
                       resource: limits.memory
                       divisor: "1Mi"
                 - name: JAVA_OPTS
-                  value: "-Djenkins.install.runSetupWizard=false -Xmx$(MEM_REQUEST)m -Dhudson.slaves.NodeProvisioner.MARGIN=50 -Dhudson.slaves.NodeProvisioner.MARGIN0=0.85"
+                  value: "-Dhudson.DNSMultiCast.disabled=true -Djenkins.CLI.disabled=true -Djenkins.install.runSetupWizard=false -Xmx$(MEM_REQUEST)m -Dhudson.slaves.NodeProvisioner.MARGIN=50 -Dhudson.slaves.NodeProvisioner.MARGIN0=0.85"
                 - name: GITHUB_USER
                   value: @@USER@@
                 - name: CLIENT_ID
