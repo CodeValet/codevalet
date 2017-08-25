@@ -58,6 +58,10 @@ module CodeValet
       haml :index, :layout => :_base, :locals => {:monkeys => masters}
     end
 
+    get '/doc' do
+      haml :doc, :layout => :_base
+    end
+
     get '/profile' do
       unless env['warden'].user
         redirect to('/')

@@ -24,6 +24,8 @@
         Code Valet
       .navbar-collapse
         .navbar-nav
+          %a.nav-item.nav-link{:href => '/doc'}
+            Docs
           %a.nav-item.nav-link{:href => 'https://p.datadoghq.com/sb/5a00f415f-76d1154160'}
             Status
           - if env['warden'].user
