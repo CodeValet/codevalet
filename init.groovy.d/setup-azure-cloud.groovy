@@ -131,8 +131,7 @@ println t.verifyTemplate()
 cloud.addVmTemplate(t)
 
 
-
-String freeBsdVhd = 'https://codevaletvhds.blob.core.windows.net/system/Microsoft.Compute/Images/images/packer-osDisk.ed9fdc8b-697c-43e7-98d1-c09df41aa4f8.vhd'
+String freeBsdVhd = 'https://codevaletvhds.blob.core.windows.net/system/Microsoft.Compute/Images/images/packer-osDisk.bc34e6b3-407e-4d45-b5f7-50fe44d5e77d.vhd'
 def freeBsdImageReference = new AzureVMAgentTemplate.ImageReferenceTypeClass(freeBsdVhd,
                                                                             freeBsdVhd,
                                                                             freeBsdVhd,
