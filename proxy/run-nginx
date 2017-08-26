@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # This is a wrapper script to lay down some environment specific configuartion
 # before the daemon starts. This can be useful for pulling environment

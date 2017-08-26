@@ -1,6 +1,6 @@
 FROM alpine
 
-RUN apk add -U dnsmasq supervisor nginx nginx-mod-http-headers-more nginx-mod-http-geoip
+RUN apk add -U bash dnsmasq supervisor nginx nginx-mod-http-headers-more nginx-mod-http-geoip
 
 ADD nginx.conf /etc/nginx/
 RUN rm /etc/nginx/conf.d/default.conf && touch /etc/nginx/vars.conf
