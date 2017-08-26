@@ -9,6 +9,9 @@ services:
     environment:
       - WEBAPP_SERVICE_PORT=9292
       - WEBAPP_SERVICE_HOST=webapp
+      # Example version of these variables for scripting/testing
+      - JENKINS_CODEVALET_SERVICE_HOST=127.0.1.1
+      - JENKINS_CODEVALET_SERVICE_PORT=80
     links:
       - webapp
 
