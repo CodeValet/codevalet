@@ -82,6 +82,7 @@ if (cloud == null) {
 /* Nuke all our templates */
 cloud.clearVmTemplates()
 
+final String agentWorkspace = '/home/azureuser/workspace'
 def imageReference = null
 def vmTemplate = null
 def vhd = null
@@ -121,7 +122,7 @@ def vhd = null
                                  '', /* Network security group name */
                                  agentWorkspace, /* agent workspace */
                                  '', /* JVM options */
-                                 <%= d['retention']%>, /* retention time */
+                                 '<%= d['retention']%>', /* retention time */
                                  false, /* shutdown on idle */
                                  false, /* template disabled */
                                  '', /* template status details */
