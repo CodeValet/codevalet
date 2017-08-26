@@ -13,6 +13,7 @@ run: webapp proxy
 
 clean:
 	rm -f build/git-refs.txt k8/generated
+	docker-compose down || true
 	$(MAKE) -C webapp clean
 	$(MAKE) -C proxy clean
 

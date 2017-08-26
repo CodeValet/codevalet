@@ -1,9 +1,9 @@
-IMAGE_PREFIX="rtyler/codevalet"
-
+IMAGE="rtyler/codevalet-proxy"
 
 check: container
+	docker run --rm -ti $(IMAGE) nginx -t
 
 container: Dockerfile
-	docker build -t ${IMAGE_PREFIX}-proxy .
+	docker build -t $(IMAGE) .
 
 .PHONY: clean check container
