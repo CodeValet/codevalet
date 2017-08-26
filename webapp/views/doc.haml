@@ -1,0 +1,88 @@
+:ruby
+  platforms = [
+    {
+      :name => 'Ubuntu 16.04',
+      :labels => ['ubuntu', 'linux', 'docker'],
+      :capabilities => '',
+    },
+    {
+      :name => 'FreeBSD 11.1',
+      :labels => ['freebsd', 'bsd'],
+      :capabilities => '',
+    },
+  ]
+
+.container
+  .col-md-10
+    .row
+      %h2
+        Overview
+      .container
+        .row
+          %p
+            Code Valet is powered by
+            %a{:href => 'https://jenkins.io'}
+              Jenkins&reg; 2
+            with
+            %a{:href => 'https://jenkins.io/doc/book/pipeline'}
+              Jenkins Pipeline.
+        .row
+          %h3
+            Features enabled
+          :markdown
+            The current list of features enabled on Code Valet, which can be
+            used in a `Jenkinsfile` are:
+
+            * XML (JUnit) test reporting integration via the `junit` step.
+            * Embedded status badges, such as:  [![Build Status](http://codevalet.codevalet.io/job/CodeValet/job/codevalet/job/master/badge/icon)](http://codevalet.codevalet.io/job/CodeValet/job/codevalet/job/master/)
+
+
+    .row
+      %h2
+        Platforms
+
+      .container
+        .row
+          %p
+            Code Valet provides ephemeral execution environments, dedicated to
+            each user or organization. This provides the best trade-off between
+            performance and reliability using the tools currently available.
+          %p
+            %table.table
+              %thead
+                %tr
+                  %th
+                    Platform
+                  %th
+                    Capabilities
+                  %th
+                    Example
+              %tbody
+                - platforms.each do |p|
+                  %tr
+                    %td
+                      %strong= p[:name]
+                      %ul
+                        - p[:labels].each do |label|
+                          %li
+                            %code= label
+
+                    %td
+                      = p[:capabilities]
+                    %td
+                      %pre
+                        %code
+                          :plain
+                            pipeline {
+                              agent { label '#{p[:labels].first}' }
+                              stages {
+                                stage('Build') {
+                                  steps {
+                                    sh 'uname -a'
+                                    sh 'cat /etc/issue'
+                                  }
+                                }
+                              }
+                            }
+
+
