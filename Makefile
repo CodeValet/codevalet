@@ -8,6 +8,9 @@ all: plugins master proxy
 
 generate: generate-tfs generate-k8s
 
+run: webapp proxy
+	docker-compose up
+
 clean:
 	rm -f build/git-refs.txt k8/generated
 	$(MAKE) -C webapp clean
