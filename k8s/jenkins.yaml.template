@@ -90,7 +90,7 @@ items:
                   value: 'https://6879decf237b4307ad697c8dc56731c3@sentry.io/206607'
                 - name: DATADOG_API_KEY
                   valueFrom:
-                  secretKeyRef:
+                    secretKeyRef:
                       name: datadog
                       key: api_key
                 - name: CLIENT_SECRET
