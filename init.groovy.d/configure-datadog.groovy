@@ -8,7 +8,7 @@ import org.datadog.jenkins.plugins.datadog.DatadogBuildListener
 def dog = Jenkins.instance.getDescriptor('org.datadog.jenkins.plugins.datadog.DatadogBuildListener')
 
 if (System.env.get('GITHUB_USER')) {
-    dog.hostname = "http://${System.env.get('GITHUB_USER')}.codevalet.io/"
+    dog.hostname = "${System.env.get('GITHUB_USER')}.codevalet.io"
 }
 
 dog.tagNode = true
