@@ -1,7 +1,9 @@
 #!/usr/bin/env groovy
 
 /*
- * Set up the Azure VM Cloud plugin
+ * Set up the Azure VM Cloud plugin.
+ *
+ * This file is generated from an ERB template!
  */
 
 import jenkins.model.*
@@ -12,8 +14,7 @@ import com.cloudbees.plugins.credentials.*
 import com.cloudbees.plugins.credentials.impl.*
 import com.cloudbees.plugins.credentials.domains.Domain
 
-
-final String maxAgents                      = '2'
+final String maxAgents                      = System.env.get('MAX_AGENTS') ?: '2'
 final String cloudName                      = 'Azure'
 final String githubUser                     = System.env.get('GITHUB_USER') ?: 'max-the-code-monkey'
 final String resourceGroup                  = "azureagents-for-codevalet"
@@ -80,25 +81,26 @@ if (cloud == null) {
 
 /* Nuke all our templates */
 cloud.clearVmTemplates()
-final String labels = 'docker linux ubuntu'
-final String agentWorkspace = '/home/azureuser/workspace'
-final String retentionTime = '10'
 
-final String vhd = 'https://codevaletvhds.blob.core.windows.net/system/Microsoft.Compute/Images/images/packer-osDisk.1988366a-5fa8-43de-8af1-f33158e2f352.vhd'
-def imageReference = new AzureVMAgentTemplate.ImageReferenceTypeClass(vhd, vhd, vhd, vhd, vhd)
+def imageReference = null
+def vmTemplate = null
+def vhd = null
 
-/* Add templates */
-def t = new AzureVMAgentTemplate('ubuntu-1604-docker', /* template name */
-                                 'Azure-based Ubuntu 16.04 machine', /* description */
-                                 labels, /* labels */
+<% agents.each_pair do |name, d| %>
+
+    vhd = '<%= d['image']['vhd'] %>'
+    imageReference = new AzureVMAgentTemplate.ImageReferenceTypeClass(vhd, vhd, vhd, vhd, vhd)
+    vmTemplate = new AzureVMAgentTemplate('<%= name %>',
+                                '<%= d['description'] %>', /* description */
+                                '<%= d['labels'].join(' ') %>', /* labels */
                                  'East US 2', /* location */
-                                 'Standard_DS4_v2', /* VM Size */
+                                 '<%= d['size'] %>', /* VM Size */
                                  'existing', /* Storage account Name reference type */
                                  'Standard_LRS', /* Storage account type */
                                  '', /* new storage account name */
                                  'codevaletvhds', /* existing storage account name */
                                  'unmanaged', /* disk type */
-                                 '1', /* number of executors */
+                                 '<%= d['executors'] %>', /* number of executors */
                                  'NORMAL', /* Usage mode */
                                  '', /* built-in image */
                                  false, /* install git */
@@ -110,7 +112,7 @@ def t = new AzureVMAgentTemplate('ubuntu-1604-docker', /* template name */
                                  imageReference, /* image reference class */
                                  'SSH', /* agent launch method */
                                  false, /* pre install SSH */
-                                 'usermod -aG docker azureuser', /* init script */
+                                 '<%= d['initscript']%>', /* init script */
                                  adminCredentialsId, /* admin credential Id */
                                  '', /* virtual network name */
                                  '', /* virtual network resource group name */
@@ -119,64 +121,14 @@ def t = new AzureVMAgentTemplate('ubuntu-1604-docker', /* template name */
                                  '', /* Network security group name */
                                  agentWorkspace, /* agent workspace */
                                  '', /* JVM options */
-                                 retentionTime, /* retention time */
+                                 <%= d['retention']%>, /* retention time */
                                  false, /* shutdown on idle */
                                  false, /* template disabled */
                                  '', /* template status details */
                                  true, /* execute init script as root */
                                  true /* do not use machine if init fails */
         )
-t.azureCloud = cloud
-println t.verifyTemplate()
-cloud.addVmTemplate(t)
+    vmTemplate.azureCloud = cloud
+    cloud.addVmTemplate(vmTemplate)
 
-
-String freeBsdVhd = 'https://codevaletvhds.blob.core.windows.net/system/Microsoft.Compute/Images/images/packer-osDisk.bc34e6b3-407e-4d45-b5f7-50fe44d5e77d.vhd'
-def freeBsdImageReference = new AzureVMAgentTemplate.ImageReferenceTypeClass(freeBsdVhd,
-                                                                            freeBsdVhd,
-                                                                            freeBsdVhd,
-                                                                            freeBsdVhd,
-                                                                            freeBsdVhd)
-t = new AzureVMAgentTemplate('freebsd-11', /* template name */
-                                 'Azure-based FreeBSD 11.1 machine', /* description */
-                                 'freebsd bsd', /* labels */
-                                 'East US 2', /* location */
-                                 'Standard_DS4_v2', /* VM Size */
-                                 'existing', /* Storage account Name reference type */
-                                 'Standard_LRS', /* Storage account type */
-                                 '', /* new storage account name */
-                                 'codevaletvhds', /* existing storage account name */
-                                 'unmanaged', /* disk type */
-                                 '1', /* number of executors */
-                                 'NORMAL', /* Usage mode */
-                                 '', /* built-in image */
-                                 false, /* install git */
-                                 false, /* install maven */
-                                 false, /* install docker */
-                                 'Linux', /* OS type */
-                                 'custom', /* image top level type */
-                                 false, /* image reference? */
-                                 freeBsdImageReference, /* image reference class */
-                                 'SSH', /* agent launch method */
-                                 false, /* pre install SSH */
-                                 '', /* init script */
-                                 adminCredentialsId, /* admin credential Id */
-                                 '', /* virtual network name */
-                                 '', /* virtual network resource group name */
-                                 '', /* subnet name */
-                                 false, /* use private IP */
-                                 '', /* Network security group name */
-                                 agentWorkspace, /* agent workspace */
-                                 '', /* JVM options */
-                                 retentionTime, /* retention time */
-                                 false, /* shutdown on idle */
-                                 false, /* template disabled */
-                                 '', /* template status details */
-                                 true, /* execute init script as root */
-                                 true /* do not use machine if init fails */
-        )
-t.azureCloud = cloud
-println t.verifyTemplate()
-cloud.addVmTemplate(t)
-
-Jenkins.instance.save()
+<% end %>
