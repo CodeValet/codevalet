@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# This is a wrapper script to lay down some environment specific configuartion
+# before the daemon starts. This can be useful for pulling environment
+# variables into the application without requiring anything too terribly goofy
+# in the nginx runtime
+
+
+cat > /etc/nginx/vars.conf << EOF
+  set \$webapp ${WEBAPP_SERVICE_HOST:-dummy-host};
+  set \$webapp_port ${WEBAPP_SERVICE_PORT:-80};
+EOF
+
+if [ "$1" = "test" ]; then
+  exec /usr/sbin/nginx -t;
+else
+  exec /usr/sbin/nginx -g "daemon off;";
+fi;
