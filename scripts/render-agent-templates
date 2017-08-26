@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+require 'erb'
+require 'yaml'
+
+repo_dir = ARGV.first
+
+puts ">> Using #{repo_dir} as the agent templates directory"
+
+agents = {}
+
+Dir.glob("#{repo_dir}/**/*.yml").each do |agent|
+  data = YAML.load(File.read(agent))
+  name = File.basename(agent, File.extname(agent))
+  agents[name] = data
+end
+
+
+template = ERB.new(File.read('init.groovy.d/setup-azure-cloud.groovy.erb'))
+File.open('init.groovy.d/setup-azure-cloud.groovy', 'w+') do |f|
+  f.write(template.result)
+end
