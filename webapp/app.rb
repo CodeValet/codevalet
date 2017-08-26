@@ -1,8 +1,11 @@
 #!/usr/bin/env ruby
 
+require 'haml'
 require 'sinatra/base'
 require 'warden/github'
 require 'yaml'
+
+Haml::TempleEngine.disable_option_validator!
 
 module CodeValet
   class AuthFailre < Sinatra::Base
