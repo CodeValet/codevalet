@@ -1,10 +1,10 @@
-IMAGE="rtyler/codevalet-proxy"
+IMAGE=rtyler/codevalet-proxy
 
 check: container
 	docker run --rm -ti \
 		-e JENKINS_CODEVALET_SERVICE_HOST=127.0.1.1 \
 		-e JENKINS_CODEVALET_SERVICE_PORT=80 \
-		$(IMAGE) /usr/bin/run-nginx test
+		$(IMAGE):latest /usr/bin/run-nginx test
 
 container: Dockerfile
 	docker build -t $(IMAGE) .

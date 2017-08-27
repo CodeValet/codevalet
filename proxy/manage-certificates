@@ -1,23 +1,36 @@
 #!/bin/sh
 
 DOMAIN=codevalet.io
-EMAIL=tyler--letsencrypt@monkeypox.org
+EMAIL=tyler--codevalet@monkeypox.org
+
+sleep 10
+
+printenv
 
 while true; do
 
-  if [ -d /etc/letsencrypt/live ]; then
-    if [ ! -z ${LETSENCRYPT+x} ]; then
+  ls -lah /etc/letsencrypt
+  cat /etc/letsencrypt/options-ssl-nginx.conf
+
+  echo ">> Beep boop.."
+
+  if [ ! "${LETSENCRYPT+x}" = "x" ]; then
+    if [ -d /etc/letsencrypt/live ]; then
       echo ">> Let's Encrypt files appear to be on the filesystem";
       echo ">> .. attempting a renew";
-      certbot renew -d ${DOMAIN} -m ${EMAIL} --agree-tos ;
+      if [ $? -ne 0 ]; then
+        certbot renew -n -d ${DOMAIN} -m ${EMAIL};
+      fi;
     fi;
   else
-    if [ ! -z ${LETSENCRYPT+x} ]; then
-      echo ">> Let's Encrypt files do not appear to exist, registering"
-      certbot nginx -d ${DOMAIN} -m ${EMAIL} --agree-tos;
-    fi;
+    echo ">> Let's Encrypt files do not appear to exist, registering"
+    certbot register -m ${EMAIL} --agree-tos;
+    certbot certonly --webroot -w /usr/share/nginx/html -d ${DOMAIN} -m ${EMAIL} ;
   fi;
 
+  echo ">> Snoozing for a while.."
+
+  tail -n 500 /var/log/letsencrypt/*log
   # Let's nap for a whole day!
-  sleep 86400;
+  sleep 3000
 done;

@@ -13,6 +13,15 @@ cat > /etc/nginx/vars.conf << EOF
   set \$webapp_port ${WEBAPP_SERVICE_PORT:-80};
 EOF
 
+
+if [ -f /etc/letsencrypt/live/codevalet.io/cert.pem ]; then
+  cat >> /etc/nginx/vars.conf << EOF
+  ssl_certificate_key /etc/letsencrypt/live/codevalet.io/privkey.pem;
+  ssl_certificate     /etc/letsencrypt/live/codevalet.io/fullchain.pem;
+EOF
+fi;
+
+
 /usr/bin/generate-nginx-locations
 
 if [ "$1" = "test" ]; then

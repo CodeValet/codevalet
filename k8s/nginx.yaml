@@ -34,7 +34,7 @@ items:
       labels:
         name: 'nginx'
     spec:
-      replicas: 3
+      replicas: 1
       template:
         metadata:
           name: 'nginx'
@@ -46,8 +46,10 @@ items:
               image: 'rtyler/codevalet-proxy:latest'
               imagePullPolicy: Always
               ports:
-                - containerPort: 80
-                - containerPort: 443
+                - name: 'http'
+                  containerPort: 80
+                - name: 'http-tls'
+                  containerPort: 443
               env:
                 - name: PRODUCTION
                   value: 'true'
@@ -59,7 +61,7 @@ items:
               livenessProbe:
                 httpGet:
                   path: /
-                  port: 443
+                  port: 80
                 initialDelaySeconds: 30
                 timeoutSeconds: 3
           volumes:

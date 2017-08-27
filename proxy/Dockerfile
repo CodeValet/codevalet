@@ -1,13 +1,13 @@
-FROM alpine
+FROM ubuntu:xenial
 
-RUN apk add -U ruby dnsmasq supervisor \
-                certbot \
-                nginx nginx-mod-http-headers-more nginx-mod-http-geoip
+RUN apt-get update && apt-get install -qy software-properties-common
+RUN add-apt-repository ppa:certbot/certbot && \
+            apt-get update && \
+            apt-get install -qy python-certbot-nginx nginx ruby dnsmasq supervisor
 
 ADD nginx.conf /etc/nginx/
-RUN rm /etc/nginx/conf.d/default.conf && touch /etc/nginx/vars.conf /etc/nginx/monkeys.conf
+RUN touch /etc/nginx/vars.conf /etc/nginx/monkeys.conf
 ADD conf.d/*.conf /etc/nginx/conf.d/
-
 
 COPY run-nginx /usr/bin/
 COPY generate-nginx-locations /usr/bin/

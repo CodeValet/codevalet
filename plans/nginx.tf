@@ -35,12 +35,12 @@ resource "kubernetes_service" "nginx" {
     session_affinity = "ClientIP"
     port {
       name = "http"
-      target_port = 8000
+      target_port = 80
       port = 80
     }
     port {
       name = "http-tls"
-      target_port = 8443
+      target_port = 443
       port = 443
     }
   }
