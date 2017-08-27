@@ -1,6 +1,8 @@
 FROM alpine
 
-RUN apk add -U ruby dnsmasq supervisor nginx nginx-mod-http-headers-more nginx-mod-http-geoip
+RUN apk add -U ruby dnsmasq supervisor \
+                certbot \
+                nginx nginx-mod-http-headers-more nginx-mod-http-geoip
 
 ADD nginx.conf /etc/nginx/
 RUN rm /etc/nginx/conf.d/default.conf && touch /etc/nginx/vars.conf /etc/nginx/monkeys.conf
