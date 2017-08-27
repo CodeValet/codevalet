@@ -30,6 +30,7 @@ __END__
 <% locations.each_pair do |name, data| %>
 
   location /u/<%= name %> {
+    proxy_set_header Host $host;
     proxy_pass http://<%= data[:host] %>:<%= data[:port] %>;
   }
 

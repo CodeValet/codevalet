@@ -30,7 +30,7 @@ items:
                 - name: PRODUCTION
                   value: 'true'
                 - name: REDIRECT_URI
-                  value: 'http://codevalet.io/github/authenticate'
+                  value: 'https://codevalet.io/github/authenticate'
                 - name: GITHUB_CLIENT_ID
                   value: '790a28783a813e2b2b3c'
                 - name: GITHUB_CLIENT_SECRET

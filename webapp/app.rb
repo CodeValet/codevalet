@@ -14,6 +14,8 @@ module CodeValet
       <<-EOS
       <h2>Unable to authenticate, sorry bud.</h2>
       <p>#{env['warden'].message}</p>
+      <p>#{ENV['REDIRECT_URI']}</p>
+      <p>#{ENV['GITHUB_CLIENT_ID']}</p>
       EOS
     end
   end
@@ -97,7 +99,7 @@ module CodeValet
             login = session[:admin_instance]
             session[:admin_instance] = nil
           end
-          href = "http://#{login}.codevalet.io/#{redirect_path}"
+          href = "https://codevalet.io/u/#{login}/#{redirect_path}"
         end
         redirect to(href)
       end
@@ -117,13 +119,12 @@ module CodeValet
           login = params['instance']
           session[:admin_instance] = login
         end
-        href = "http://#{login}.codevalet.io/#{redirect_path}"
+        href = "https://codevalet.io/u/#{login}/#{redirect_path}"
       end
       redirect to(href)
     end
 
     get '/github/logout' do
-      session[:oauthcode] = nil
       env['warden'].logout
       redirect '/'
     end
