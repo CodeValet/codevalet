@@ -11,6 +11,7 @@ ADD conf.d/*.conf /etc/nginx/conf.d/
 
 COPY run-nginx /usr/bin/
 COPY generate-nginx-locations /usr/bin/
+COPY manage-certificates /usr/bin/
 COPY supervisor.conf /etc/supervisor/conf.d/supervisor.conf
 
 EXPOSE 80
