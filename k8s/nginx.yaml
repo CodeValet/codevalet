@@ -60,7 +60,7 @@ items:
                   mountPath: '/etc/letsencrypt'
               livenessProbe:
                 httpGet:
-                  path: /
+                  path: /health
                   port: 80
                 initialDelaySeconds: 30
                 timeoutSeconds: 3

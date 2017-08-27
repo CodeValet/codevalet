@@ -125,7 +125,7 @@ items:
                   mountPath: "/var/jenkins_home"
               livenessProbe:
                 httpGet:
-                  path: /login
+                  path: '/u/@@USER@@/login'
                   port: 8080
                 initialDelaySeconds: 60
                 timeoutSeconds: 5
