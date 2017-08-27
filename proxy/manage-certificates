@@ -1,0 +1,23 @@
+#!/bin/sh
+
+DOMAIN=codevalet.io
+EMAIL=tyler--letsencrypt@monkeypox.org
+
+while true; do
+
+  if [ -d /etc/letsencrypt/live ]; then
+    echo ">> Let's Encrypt files appear to be on the filesystem";
+    echo ">> .. attempting a renew";
+    if [ -z "${LETSENCRYPT}" ]; then
+      certbot renew -d ${DOMAIN} -m ${EMAIL} --agree-tos ;
+    fi;
+  else
+    echo ">> Let's Encrypt files do not appear to exist, registering"
+    if [ -z "${LETSENCRYPT}" ]; then
+      certbot nginx -d ${DOMAIN} -m ${EMAIL} --agree-tos;
+    fi;
+  fi;
+
+  # Let's nap for a whole day!
+  sleep 86400;
+done;

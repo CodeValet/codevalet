@@ -1,1 +1,4 @@
 build/repos
+webapp/
+proxy/
+assets/
