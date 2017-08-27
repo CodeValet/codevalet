@@ -88,6 +88,8 @@ items:
                       key: sentry
                 - name: SENTRY_PUBLIC_DSN
                   value: 'https://6879decf237b4307ad697c8dc56731c3@sentry.io/206607'
+                - name: JENKINS_OPTS
+                  value: '--prefix=/u/@@USER@@'
                 - name: DATADOG_API_KEY
                   valueFrom:
                     secretKeyRef:
