@@ -59,9 +59,12 @@ items:
                 - name: 'nginx'
                   mountPath: '/etc/letsencrypt'
               livenessProbe:
-                httpGet:
-                  path: /health
+                tcpSocket:
                   port: 80
+                initialDelaySeconds: 30
+                timeoutSeconds: 3
+                tcpSocket:
+                  port: 443
                 initialDelaySeconds: 30
                 timeoutSeconds: 3
           volumes:
