@@ -9,13 +9,6 @@ resource "azurerm_public_ip" "webapp" {
   public_ip_address_allocation = "static"
 }
 
-resource "azurerm_dns_a_record" "webapp" {
-  name                = "@"
-  zone_name           = "${azurerm_dns_zone.root.name}"
-  resource_group_name = "${azurerm_resource_group.controlplane.name}"
-  ttl                 = "300"
-  records             = ["${azurerm_public_ip.webapp.ip_address}"]
-}
 
 resource "kubernetes_service" "webapp" {
   depends_on = [
