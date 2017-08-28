@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'erb' 
+require 'erb'
 
 locations = {}
 
@@ -33,5 +33,10 @@ __END__
     proxy_set_header Host $host;
     proxy_pass http://<%= data[:host] %>:<%= data[:port] %>;
   }
+
+  location = ^/u/<%= name %>/$ {
+    return 301 $scheme://$server_name/u/<%= name %>/blue/pipelines;
+  }
+
 
 <% end %>
