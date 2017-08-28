@@ -19,14 +19,26 @@
                 :name => "email",
                 :type => "text"}/
               %input.btn{:type => "submit", :value => "Subscribe"}/
-    .col-lg-12
+    .col-lg-8
       %h2
         Quickstart
       %p
         Integrating with Code Valet is easy. To get started, sign up with your GitHub 
         account, select a project to build, and define how to build it, either visually 
         or declaratively.
-
+    .col-sm-4
+      %h2
+        &nbsp;
+      %p
+        .dropdown
+          %button.btn.btn-secondary.dropdown-toggle{'data-toggle' => 'dropdown'}
+            Examples
+          .dropdown-menu
+            - monkeys.each do |monkey|
+              %a.dropdown-item{:href => "/u/#{monkey}"}
+                = monkey
+  .row
+    .col-md-12
       %img.img-fluid{:src => '/images/create-new-pipeline.png'}
 
   .row
