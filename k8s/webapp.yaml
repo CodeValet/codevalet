@@ -33,6 +33,11 @@ items:
                   value: 'https://codevalet.io/github/authenticate'
                 - name: GITHUB_CLIENT_ID
                   value: '790a28783a813e2b2b3c'
+                - name: SENTRY_DSN
+                  valueFrom:
+                    secretKeyRef:
+                      name: webapp
+                      key: sentry
                 - name: GITHUB_CLIENT_SECRET
                   valueFrom:
                     secretKeyRef:

@@ -4,6 +4,7 @@ gem 'sinatra'
 gem 'haml'
 gem 'warden-github'
 gem 'kramdown'
+gem 'sentry-raven'
 
 group :test do
   gem 'rspec'
