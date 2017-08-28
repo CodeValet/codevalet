@@ -29,14 +29,11 @@ __END__
 #
 <% locations.each_pair do |name, data| %>
 
+  location = /u/<%= name %>/ {
+    return 301 $scheme://$server_name/u/<%= name %>/blue/pipelines;
+  }
   location /u/<%= name %> {
     proxy_set_header Host $host;
     proxy_pass http://<%= data[:host] %>:<%= data[:port] %>;
   }
-
-  location = ^/u/<%= name %>/$ {
-    return 301 $scheme://$server_name/u/<%= name %>/blue/pipelines;
-  }
-
-
 <% end %>

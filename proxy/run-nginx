@@ -21,8 +21,9 @@ if [ -f /etc/letsencrypt/live/codevalet.io/cert.pem ]; then
 EOF
 fi;
 
-
 /usr/bin/generate-nginx-locations
+
+cat /etc/nginx/monkeys.conf
 
 if [ "$1" = "test" ]; then
   exec /usr/sbin/nginx -t;
