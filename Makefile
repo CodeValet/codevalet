@@ -58,7 +58,7 @@ webapp:
 
 ## Terraform
 ###############################################################
-validate: plans/*.tf generate-tfs
+validate: plans/*.tf
 	./scripts/terraform validate plans
 
 plan: validate
@@ -66,12 +66,6 @@ plan: validate
 
 deploy: plan
 	./scripts/terraform apply --var-file=.terraform.json plans
-
-generate-tfs: monkeys.txt
-	@for m in $(shell cat monkeys.txt); do \
-		echo ">> Generating Terraform resources for $$m" ; \
-		cat plans/master.tf.template | sed "s/@@USER@@/$$m/" > plans/generated.$$m.tf ; \
-	done;
 ###############################################################
 
 
