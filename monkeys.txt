@@ -1,6 +1,8 @@
+abayer
+berriedale
+codevalet
+jruby-gradle
+lavaliere
 rtyler
 michaelneale
-abayer
-lavaliere
-codevalet
 ysb33r
