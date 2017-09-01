@@ -36,9 +36,6 @@ fi;
 
 pushd $REPOS_DIR
 
-  # Grab the hacked up Sentry plugin of ours
-  git clone --depth 1 git://github.com/codevalet/sentry-plugin.git
-
   # Grab t he latest datadog plugin from their org (it's not in jenkinsci)
   git clone --depth 1 git://github.com/datadog/jenkins-datadog-plugin.git datadog-plugin
 
