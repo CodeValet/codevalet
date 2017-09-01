@@ -57,6 +57,9 @@ pushd $REPOS_DIR
     cloneWithDependencies $plugin
   done;
 
+  # This was merged into the blueocean-plugin repository but still exists as a tombstone
+  rm -rf blueocean-pipeline-editor-plugin
+
   set -e
   for d in *-plugin; do
       pushd $d
