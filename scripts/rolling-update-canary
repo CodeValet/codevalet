@@ -1,3 +1,3 @@
 #!/bin/sh
 
-exec kubectl rolling-update webapp --image=rtyler/codevalet-canary:latest --image-pull-policy=Always --update-period=10s
+exec kubectl rolling-update canary --image=rtyler/codevalet-canary:latest --image-pull-policy=Always --update-period=10s
