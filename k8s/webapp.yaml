@@ -1,8 +1,4 @@
 ---
-# Based on
-# https://radu-matei.github.io/blog/kubernetes-jenkins-azure/#configuring-jenkins-to-dinamically-spawn-agents-docker-containers-for-builds
-#
-# Thanks Radu!
 apiVersion: "v1"
 kind: "List"
 items:
