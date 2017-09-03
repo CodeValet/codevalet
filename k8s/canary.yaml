@@ -43,13 +43,13 @@ items:
                 - name: SENTRY_DSN
                   valueFrom:
                     secretKeyRef:
-                      name: webapp
+                      name: canary
                       key: sentry
                 - name: SENTRY_API_TOKEN
                   valueFrom:
                     secretKeyRef:
                       name: canary
-                      key: sentry
+                      key: sentryapi
               livenessProbe:
                 httpGet:
                   path: /
