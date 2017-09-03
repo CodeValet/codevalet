@@ -11,6 +11,9 @@ cat > /etc/nginx/vars.conf << EOF
 
   set \$webapp ${WEBAPP_SERVICE_HOST:-dummy-host};
   set \$webapp_port ${WEBAPP_SERVICE_PORT:-80};
+
+  set \$canary ${CANARY_SERVICE_HOST:-dummy-host};
+  set \$canary_port ${CANARY_SERVICE_PORT:-80};
 EOF
 
 
