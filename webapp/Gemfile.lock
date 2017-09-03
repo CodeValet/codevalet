@@ -23,6 +23,7 @@ GEM
     octokit (4.7.0)
       sawyer (~> 0.8.0, >= 0.5.3)
     public_suffix (2.0.5)
+    puma (3.10.0)
     rack (2.0.3)
     rack-protection (2.0.0)
       rack
@@ -67,6 +68,7 @@ PLATFORMS
 DEPENDENCIES
   haml
   kramdown
+  puma
   rspec
   sentry-raven
   sinatra
