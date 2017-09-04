@@ -40,7 +40,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo 'Maybe rtyler will write some tests'
+                sh 'make check'
             }
         }
     }
