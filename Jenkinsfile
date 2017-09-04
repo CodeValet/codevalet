@@ -22,11 +22,13 @@ pipeline {
             }
         }
         stage('Build necessary plugins') {
+            when { branch 'master' }
             steps {
                 sh 'make plugins'
             }
         }
         stage('Create master container') {
+            when { branch 'master' }
             steps {
                 sh 'make master'
             }
