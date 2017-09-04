@@ -38,6 +38,8 @@ items:
               ports:
                 - containerPort: 9292
               env:
+                - name: RACK_ENV
+                  value: 'production'
                 - name: PRODUCTION
                   value: 'true'
                 - name: SENTRY_DSN
