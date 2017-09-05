@@ -5,4 +5,5 @@ jruby-gradle
 lavaliere
 rtyler
 michaelneale
+markewaite
 ysb33r
