@@ -1,7 +1,5 @@
 abayer
-berriedale
 codevalet
-jruby-gradle
 lavaliere
 rtyler
 michaelneale
