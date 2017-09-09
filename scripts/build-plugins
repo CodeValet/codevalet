@@ -36,7 +36,10 @@ fi;
 
 pushd $REPOS_DIR
 
-  # Grab t he latest datadog plugin from their org (it's not in jenkinsci)
+  # Grab Keith's superb executor info plugin
+  git clone --depth 1 git://github.com/rtyler/blueocean-executor-info-plugin.git
+
+  # Grab the latest datadog plugin from their org (it's not in jenkinsci)
   git clone --depth 1 git://github.com/datadog/jenkins-datadog-plugin.git datadog-plugin
 
   # pubsub-light-module is a plugin but not called a plugin
