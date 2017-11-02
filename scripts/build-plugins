@@ -18,7 +18,7 @@ function cloneWithDependencies() {
         git clone --depth 1 git://github.com/jenkinsci/$1.git
     fi;
 
-    for pom in $(find $1 -iname 'pom.xml' -type f); do
+    for pom in $(find $1 -iname 'pom.xml' -maxdepth 2 -type f); do
         (cd $(dirname $pom) && ${SCRIPTS_DIR}/plugins-from-pom 'pom.xml')
     done;
 
@@ -35,9 +35,6 @@ if [ $? -eq 0 ]; then
 fi;
 
 pushd $REPOS_DIR
-
-  # Grab Keith's superb executor info plugin
-  git clone --depth 1 git://github.com/rtyler/blueocean-executor-info-plugin.git
 
   # Grab the latest datadog plugin from their org (it's not in jenkinsci)
   git clone --depth 1 git://github.com/datadog/jenkins-datadog-plugin.git datadog-plugin
