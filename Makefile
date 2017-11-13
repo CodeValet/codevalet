@@ -8,7 +8,7 @@ check: generate validate
 
 all: plugins master proxy
 
-generate: generate-tfs generate-k8s
+generate: generate-k8s
 
 run: webapp proxy
 	docker-compose up
@@ -105,5 +105,5 @@ k8s/generated:
 
 
 .PHONY: clean all plugins master builder plan validate \
-	deploy generate-k8s deploy-k8s webapp check generate-tfs generate \
+	deploy generate-k8s deploy-k8s webapp check generate \
 	agent-templates proxy run tfinit
