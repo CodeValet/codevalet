@@ -2,10 +2,14 @@
 # Variables for plugging in various environment specific settings
 #
 
-
 variable "env" {
   type    = "string"
   default = "dev"
+}
+
+variable "dnsprefix" {
+    type    = "string"
+    default = ""
 }
 
 variable "region" {

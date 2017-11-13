@@ -5,6 +5,6 @@
 # considered "trusted" resources and not those running user-generated code.
 
 resource "azurerm_resource_group" "controlplane" {
-  name     = "codevalet"
-  location = "${var.region}"
+    name     = "codevalet"
+    location = "${var.region}"
 }
