@@ -1,35 +1,45 @@
 ---
-apiVersion: "v1"
-kind: "List"
+apiVersion: 'v1'
+kind: 'List'
 items:
-  - apiVersion: "v1"
-    kind: "Service"
+  - apiVersion: v1
+    kind: Namespace
     metadata:
       name: 'canary'
+
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: 'canary'
+      namespace: 'canary'
     spec:
       type: 'LoadBalancer'
       selector:
         name: 'canary'
       ports:
         -
-          name: "http"
+          name: 'http'
           port: 80
           targetPort: 9292
-          protocol: "TCP"
+          protocol: 'TCP'
 
-  - apiVersion: "v1"
-    kind: "ReplicationController"
+  - apiVersion: extensions/v1beta1
+    kind: Deployment
     metadata:
       name: 'canary'
+      namespace: 'canary'
       labels:
         name: 'canary'
     spec:
       replicas: 3
+      strategy:
+        type: RollingUpdate
+      selector:
       template:
         metadata:
-          name: 'canary'
           labels:
-            name: 'canary'
+            app: 'canary'
+          annotations:
         spec:
           containers:
             - name: 'canary'
@@ -37,6 +47,12 @@ items:
               imagePullPolicy: Always
               ports:
                 - containerPort: 9292
+                  name: http
+              resources:
+                requests:
+                  memory: 64M
+                limits:
+                  memory: 256M
               env:
                 - name: RACK_ENV
                   value: 'production'
@@ -58,5 +74,4 @@ items:
                   port: 9292
                 initialDelaySeconds: 60
                 timeoutSeconds: 10
-
 # vim: ft=yaml
