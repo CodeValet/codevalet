@@ -8,10 +8,10 @@ resource "azurerm_resource_group" "images" {
 }
 
 resource "azurerm_storage_account" "images" {
-  name                = "codevaletvhds"
-  resource_group_name = "${azurerm_resource_group.images.name}"
-
-  location     = "${var.region}"
-  account_type = "Standard_LRS"
+    name                     = "codevaletimages"
+    resource_group_name      = "${azurerm_resource_group.images.name}"
+    location                 = "${var.region}"
+    account_tier             = "Standard"
+    account_replication_type = "LRS"
 
 }

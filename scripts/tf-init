@@ -1,0 +1,20 @@
+#!/bin/sh -e
+
+TERRAFORM=$(dirname $0)/terraform
+TF_VARFILE=$1
+
+# Pull everything from our var-file into shell variables
+# How's that for some python code golf?
+eval $(python -c "import json; print '\n'.join(['{}={}'.format(k.upper(),v) for k,v in json.load(file('${TF_VARFILE}')).iteritems()]);")
+
+${TERRAFORM} init \
+    -backend=true \
+    -backend-config="storage_account_name=${ENV}codevalettf" \
+    -backend-config="container_name=tfstate" \
+    -backend-config="key=codevalet.tfstate" \
+    -backend-config="resource-group-name=${ENV}codevalet" \
+    -backend-config="arm_subscription_id=${SUBCRIPTION_ID}" \
+    -backend-config="arm_client_id=${CLIENT_ID}" \
+    -backend-config="arm_client_secret=${CLIENT_SECRET}" \
+    -backend-config="arm_tenant_id=${TENANT_ID}" \
+    plans

@@ -39,3 +39,10 @@ given administrative access to the Jenkins master.
 Groovy scripting will set up some VM templates which will provide dynamically
 provisioned agents in a cloud provider such as Azure, with a fixed quota, i.e.
 2 active machines per.
+
+
+== Operating
+
+Presently, after moving into a CloudBees-owned Azure subscription, instances
+come up with scoped (`Contributor`) permissions to provision resources only
+within the `azureagents-for-codevalet` resource group.

@@ -1,21 +1,21 @@
 IMAGE_PREFIX="rtyler/codevalet"
+TF_VARFILE=.terraform.cb.json
+TERRAFORM=./scripts/terraform
 
 check: generate validate
 	$(MAKE) -C webapp check
-	$(MAKE) -C proxy check
 
-all: plugins master proxy
+all: plugins master
 
-generate: generate-tfs generate-k8s
+generate: generate-k8s agent-templates
 
-run: webapp proxy
+run: webapp
 	docker-compose up
 
 clean:
 	rm -f build/git-refs.txt k8/generated
 	docker-compose down || true
 	$(MAKE) -C webapp clean
-	$(MAKE) -C proxy clean
 
 
 ## Build the Jenkins master image
@@ -48,9 +48,6 @@ build/agent-templates:
 
 ## Handle sub-projects
 ###############################################################
-proxy:
-	$(MAKE) -C proxy
-
 webapp:
 	$(MAKE) -C webapp
 ###############################################################
@@ -58,14 +55,17 @@ webapp:
 
 ## Terraform
 ###############################################################
-validate: plans/*.tf
-	./scripts/terraform validate plans
+validate: plans/*.tf tfinit
+	$(TERRAFORM) validate --var-file=$(TF_VARFILE) plans
 
-plan: validate
-	./scripts/terraform plan --var-file=.terraform.json plans
+plan: validate tfinit
+	$(TERRAFORM) plan --var-file=$(TF_VARFILE) plans
 
-deploy: plan
-	./scripts/terraform apply --var-file=.terraform.json plans
+deploy: plan tfinit
+	$(TERRAFORM) apply --var-file=$(TF_VARFILE) plans
+
+tfinit: $(TF_VARFILE) ./scripts/tf-init
+	./scripts/tf-init $(TF_VARFILE)
 ###############################################################
 
 
@@ -100,5 +100,5 @@ k8s/generated:
 
 
 .PHONY: clean all plugins master builder plan validate \
-	deploy generate-k8s deploy-k8s webapp check generate-tfs generate \
-	agent-templates proxy run
+	deploy generate-k8s deploy-k8s webapp check generate \
+	agent-templates run tfinit
