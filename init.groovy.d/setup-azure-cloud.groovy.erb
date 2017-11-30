@@ -44,17 +44,8 @@ if (principle.isBlank()) {
                                       'Azure credentials for provisioning agent', /* description */
                                       subscriptionId,           /* subscriptionId */
                                       clientId,                /* clientId */
-                                      clientSecret ,           /* clientSecret */
-                                      /* oauth2 Token endpoint */
-                                      "https://login.windows.net/${tenantId}",
-                                      /* service management url */
-                                      AzureCredentials.Constants.DEFAULT_MANAGEMENT_URL,
-                                      /* authentication endpoint */
-                                      AzureCredentials.Constants.DEFAULT_AUTHENTICATION_ENDPOINT,
-                                      /* resource manager endpoint */
-                                      AzureCredentials.Constants.DEFAULT_RESOURCE_MANAGER_ENDPOINT,
-                                      /* graph endpoint */
-                                      AzureCredentials.Constants.DEFAULT_GRAPH_ENDPOINT)
+                                      clientSecret)           /* clientSecret */
+    credential.tenant = tenantId
 
     SystemCredentialsProvider.instance.store.addCredentials(Domain.global(), credential)
 }
@@ -66,8 +57,6 @@ def cloud = Jenkins.instance.clouds.find { it.name == cloudName }
 /* Avoid adding the AzureVMCloud over and over and over again */
 if (cloud == null) {
     cloud = new AzureVMCloud(cloudName,         /* Cloud Name */
-                                /* Azure Credentials Id */
-                                AzureCredentials.getServicePrincipal(credentialsId),
                                 credentialsId,      /* credentials id */
                                 maxAgents,          /* Max Agents */
                                 '1200',             /* Deployment Timeout (s) */
@@ -96,7 +85,7 @@ def vhd = null
     vmTemplate = new AzureVMAgentTemplate('<%= name %>',
                                 '<%= d['description'] %>', /* description */
                                 '<%= d['labels'].join(' ') %>', /* labels */
-                                 'East US 2', /* location */
+                                 'West US', /* location */
                                  '<%= d['size'] %>', /* VM Size */
                                  'existing', /* Storage account Name reference type */
                                  'Standard_LRS', /* Storage account type */
