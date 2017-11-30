@@ -4,20 +4,18 @@ TERRAFORM=./scripts/terraform
 
 check: generate validate
 	$(MAKE) -C webapp check
-	$(MAKE) -C proxy check
 
-all: plugins master proxy
+all: plugins master
 
 generate: generate-k8s
 
-run: webapp proxy
+run: webapp
 	docker-compose up
 
 clean:
 	rm -f build/git-refs.txt k8/generated
 	docker-compose down || true
 	$(MAKE) -C webapp clean
-	$(MAKE) -C proxy clean
 
 
 ## Build the Jenkins master image
@@ -50,9 +48,6 @@ build/agent-templates:
 
 ## Handle sub-projects
 ###############################################################
-proxy:
-	$(MAKE) -C proxy
-
 webapp:
 	$(MAKE) -C webapp
 ###############################################################
@@ -106,4 +101,4 @@ k8s/generated:
 
 .PHONY: clean all plugins master builder plan validate \
 	deploy generate-k8s deploy-k8s webapp check generate \
-	agent-templates proxy run tfinit
+	agent-templates run tfinit
