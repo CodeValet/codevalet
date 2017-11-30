@@ -16,8 +16,9 @@ items:
       name: "jenkins-@@USER@@"
       namespace: "jenkins-@@USER@@"
     spec:
+      storageClassName: 'azurefile'
       accessModes:
-        - ReadWriteOnce
+        - ReadWriteMany
       resources:
         requests:
           storage: 5Gi
@@ -29,10 +30,13 @@ items:
       namespace: 'jenkins-@@USER@@'
     spec:
       ports:
-        - port: 80
+        - name: 'http'
+          port: 80
           targetPort: 8080
           protocol: TCP
-        - port: 50000
+        - name: 'jnlp'
+          port: 50000
+          targetPort: 50000
           protocol: TCP
       selector:
         app: 'jenkins-@@USER@@'
@@ -79,7 +83,8 @@ items:
         spec:
           securityContext:
             fsGroup: 1000
-            runAsUser: 1000
+            # https://github.com/kubernetes/kubernetes/issues/2630#issuecomment-344091454
+            runAsUser: 0
           volumes:
             - name: "jenkins-@@USER@@"
               persistentVolumeClaim:
