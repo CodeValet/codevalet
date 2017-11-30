@@ -7,7 +7,7 @@ check: generate validate
 
 all: plugins master
 
-generate: generate-k8s
+generate: generate-k8s agent-templates
 
 run: webapp
 	docker-compose up
