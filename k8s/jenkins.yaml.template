@@ -75,6 +75,9 @@ items:
             app: "jenkins-@@USER@@"
           annotations:
         spec:
+          securityContext:
+            fsGroup: 1000
+            runAsUser: 1000
           volumes:
             - name: "jenkins-@@USER@@"
               persistentVolumeClaim:
