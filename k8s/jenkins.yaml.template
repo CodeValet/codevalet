@@ -1,29 +1,20 @@
 ---
 # Based on
-# https://radu-matei.github.io/blog/kubernetes-jenkins-azure/#configuring-jenkins-to-dinamically-spawn-agents-docker-containers-for-builds
+# https://github.com/kubernetes/charts/blob/master/stable/jenkins/templates/jenkins-master-deployment.yaml
 #
-# Thanks Radu!
-apiVersion: "v1"
+apiVersion: v1
 kind: "List"
 items:
-  # jenkins
-  - apiVersion: "v1"
-    kind: "PersistentVolume"
+  - apiVersion: v1
+    kind: Namespace
     metadata:
       name: "jenkins-@@USER@@"
-    spec:
-      accessModes:
-        - ReadWriteOnce
-      capacity:
-        storage: 5Gi
-      gcePersistentDisk:
-        pdName: 'jenkins-@@USER@@'
-        fsType: ext4
 
-  - apiVersion: "v1"
-    kind: "PersistentVolumeClaim"
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
     metadata:
       name: "jenkins-@@USER@@"
+      namespace: "jenkins-@@USER@@"
     spec:
       accessModes:
         - ReadWriteOnce
@@ -31,31 +22,77 @@ items:
         requests:
           storage: 5Gi
 
-  - apiVersion: "v1"
-    kind: "ReplicationController"
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: 'jenkins-@@USER@@'
+      namespace: 'jenkins-@@USER@@'
+    spec:
+      ports:
+        - port: 80
+          targetPort: 8080
+          protocol: TCP
+      selector:
+        app: 'jenkins-@@USER@@'
+
+  - apiVersion: extensions/v1beta1
+    kind: Ingress
+    metadata:
+      name: 'http-ingress'
+      annotations:
+        kubernetes.io/tls-acme: "true"
+        kubernetes.io/ingress.class: "nginx"
+    spec:
+      tls:
+      - hosts:
+        - codevalet.io
+        secretName: ingress-tls
+      rules:
+      - host: codevalet.io
+        http:
+          paths:
+          - path: '/u/@@USER@@'
+            backend:
+              serviceName: 'jenkins-@@USER@@'
+              servicePort: 80
+
+  - apiVersion: extensions/v1beta1
+    kind: Deployment
     metadata:
       name: "jenkins-@@USER@@"
+      namespace: "jenkins-@@USER@@"
       labels:
         name: "jenkins-@@USER@@"
     spec:
       replicas: 1
+      strategy:
+        type: RollingUpdate
+      selector:
       template:
         metadata:
-          name: "jenkins-@@USER@@"
           labels:
-            name: "jenkins-@@USER@@"
+            app: "jenkins-@@USER@@"
+          annotations:
         spec:
+          volumes:
+            - name: "jenkins-@@USER@@"
+              persistentVolumeClaim:
+                claimName: "jenkins-@@USER@@"
           containers:
             - name: "jenkins-@@USER@@"
-              image: 'rtyler/codevalet-master:latest'
+              image: "rtyler/codevalet-master:latest"
               imagePullPolicy: Always
               ports:
                 - containerPort: 8080
+                  name: http
               resources:
-                limits:
-                  memory: 1G
                 requests:
                   memory: 384M
+                limits:
+                  memory: 1G
+              volumeMounts:
+                - name: "jenkins-@@USER@@"
+                  mountPath: "/var/jenkins_home"
               env:
                 - name: CPU_REQUEST
                   valueFrom:
@@ -120,35 +157,4 @@ items:
                     secretKeyRef:
                       name: jenkins-masters
                       key: azure_subscription
-              volumeMounts:
-                - name: "jenkins-@@USER@@"
-                  mountPath: "/var/jenkins_home"
-              livenessProbe:
-                httpGet:
-                  path: '/u/@@USER@@/login'
-                  port: 8080
-                initialDelaySeconds: 60
-                timeoutSeconds: 5
-          securityContext:
-            fsGroup: 1000
-          volumes:
-            - name: "jenkins-@@USER@@"
-              persistentVolumeClaim:
-                claimName: "jenkins-@@USER@@"
-
-  - apiVersion: "v1"
-    kind: "Service"
-    metadata:
-      name: "jenkins-@@USER@@"
-    spec:
-      type: 'LoadBalancer'
-      selector:
-        name: "jenkins-@@USER@@"
-      ports:
-        -
-          name: "http"
-          port: 80
-          targetPort: 8080
-          protocol: "TCP"
-
 # vim: ft=yaml
