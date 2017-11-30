@@ -32,6 +32,8 @@ items:
         - port: 80
           targetPort: 8080
           protocol: TCP
+        - port: 50000
+          protocol: TCP
       selector:
         app: 'jenkins-@@USER@@'
 
@@ -89,6 +91,8 @@ items:
               ports:
                 - containerPort: 8080
                   name: http
+                - containerPort: 50000
+                  name: jnlp
               resources:
                 requests:
                   memory: 384M
