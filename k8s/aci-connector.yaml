@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: aci-connector
+  namespace: default
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: aci-connector
+    spec:
+      containers:
+      - name: aci-connector
+        image: microsoft/aci-connector-k8s:latest
+        imagePullPolicy: Always
+        env:
+        - name: AZURE_CLIENT_KEY
+          valueFrom:
+            secretKeyRef:
+              name: jenkins-masters
+              key: azure_client_secret
+        - name: AZURE_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: jenkins-masters
+              key: azure_client
+        - name: AZURE_TENANT_ID
+          valueFrom:
+            secretKeyRef:
+              name: jenkins-masters
+              key: azure_tenant
+        - name: AZURE_SUBSCRIPTION_ID
+          valueFrom:
+            secretKeyRef:
+              name: jenkins-masters
+              key: azure_subscription
+        - name: ACI_RESOURCE_GROUP
+          value: 'azureagents-for-codevalet'
+        - name: ACI_REGION
+          value: 'westus'
