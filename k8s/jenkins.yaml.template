@@ -16,7 +16,7 @@ items:
       name: "jenkins-@@USER@@"
       namespace: "jenkins-@@USER@@"
     spec:
-      storageClassName: 'azurefile'
+      storageClassName: azurefile
       accessModes:
         - ReadWriteMany
       resources:
