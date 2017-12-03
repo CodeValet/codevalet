@@ -46,3 +46,14 @@ provisioned agents in a cloud provider such as Azure, with a fixed quota, i.e.
 Presently, after moving into a CloudBees-owned Azure subscription, instances
 come up with scoped (`Contributor`) permissions to provision resources only
 within the `azureagents-for-codevalet` resource group.
+
+
+== Provisioning Kubernetes
+
+* Provisioning the AKS cluster to begin with: `az aks create -g codevalet -n codevalet -s Standard_DS4_v2 -l eastus -k 1.8.1`
+* Add the ingress-nginx controller based on link:https://github.com/kubernetes/ingress-nginx/tree/master/deploy[these instructures]
+* Edit the storage classes to make the `managed-premium` storage class default,
+  `kubectl edit storageclass managed-premium` and add the
+  `storageclass.kubernetes.io/is-default-class` annotation with a value of
+  `'true'`
+* Start applying yamls in order
