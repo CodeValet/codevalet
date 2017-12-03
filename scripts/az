@@ -3,7 +3,7 @@
 # This script is meant to be added to the PATH so the latest azure-cli is
 # always ready to use
 
-CONTAINER_NAME=azuresdk/azure-cli-python:2.0.10
+CONTAINER_NAME=azuresdk/azure-cli-python:latest
 REPO_DIR=$(realpath $(dirname $0)/../)
 
 pull_container() {
