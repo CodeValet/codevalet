@@ -86,7 +86,6 @@ module CodeValet
     end
 
     get '/github/authenticate' do
-      puts request.inspect
       env['warden'].authenticate!
 
       if session[:jenkins] && env['warden'].user
@@ -99,7 +98,7 @@ module CodeValet
             login = session[:admin_instance]
             session[:admin_instance] = nil
           end
-          href = "https://codevalet.io/u/#{login}/#{redirect_path}"
+          href = "https://#{login}.codevalet.io/#{redirect_path}"
         end
         redirect to(href)
       end
@@ -119,7 +118,7 @@ module CodeValet
           login = params['instance']
           session[:admin_instance] = login
         end
-        href = "https://codevalet.io/u/#{login}/#{redirect_path}"
+        href = "https://#{login}.codevalet.io/#{redirect_path}"
       end
       redirect to(href)
     end

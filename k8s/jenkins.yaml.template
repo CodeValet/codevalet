@@ -39,13 +39,13 @@ items:
     spec:
       tls:
       - hosts:
-        - codevalet.io
+        - '@@USER@@.codevalet.io'
         secretName: ingress-tls
       rules:
-      - host: codevalet.io
+      - host: '@@USER@@.codevalet.io'
         http:
           paths:
-          - path: '/u/@@USER@@'
+          - path: '/'
             backend:
               serviceName: 'jenkins-@@USER@@'
               servicePort: 80
@@ -133,7 +133,7 @@ items:
                 - name: SENTRY_PUBLIC_DSN
                   value: 'https://6879decf237b4307ad697c8dc56731c3@sentry.io/206607'
                 - name: JENKINS_OPTS
-                  value: '--prefix=/u/@@USER@@'
+                  value: ''
                 - name: DATADOG_API_KEY
                   valueFrom:
                     secretKeyRef:
