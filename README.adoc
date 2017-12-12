@@ -1,7 +1,7 @@
 = Code Valet
 
 image:https://badges.gitter.im/codevalet/codevalet.svg[Gitter, link=https://gitter.im/codevalet/codevalet]
-image:https://codevalet.io/u/codevalet/job/CodeValet/job/codevalet/job/master/badge/icon[Code Valet on Code Valet, link=https://codevalet.io/u/codevalet/blue/organizations/jenkins/CodeValet%2Fcodevalet/activity]
+image:https://codevalet.codevalet.io/job/codevalet/job/master/badge/icon[Code Valet on Code Valet, link=https://codevalet.codevalet.io/blue/organizations/jenkins/codevalet/activity]
 
 image::https://github.com/rtyler/codevalet/raw/master/assets/monkey-128.png[Code Valet is a Monkey]
 
