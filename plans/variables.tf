@@ -21,8 +21,20 @@ variable "region" {
 # Variables which should be kept secret
 # and provided by a --var-file
 #######################################
-variable "subscription_id" {}
-variable "client_id" {}
-variable "client_secret" {}
-variable "tenant_id" {}
+variable "subscription_id" {
+    type    = "string"
+    default = "invalid-subscription"
+}
+variable "client_id" {
+    type    = "string"
+    default = "invalid-client"
+}
+variable "client_secret" {
+    type    = "string"
+    default = "invalid-client-secret"
+}
+variable "tenant_id" {
+    type    = "string"
+    default = "invalid-tenant-id"
+}
 #######################################
