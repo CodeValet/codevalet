@@ -66,6 +66,8 @@ deploy: plan tfinit
 
 tfinit: $(TF_VARFILE) ./scripts/tf-init
 	./scripts/tf-init $(TF_VARFILE)
+$(TF_VARFILE):
+	touch $(TF_VARFILE)
 ###############################################################
 
 
