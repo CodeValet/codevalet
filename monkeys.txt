@@ -1,9 +1,11 @@
 abayer
-codevalet
-lavaliere
-rtyler
-ysb33r
+bitwiseman
 jmmeessen
+lavaliere
+markewaite
 michaelneale
 omehegan
-markewaite
+rtyler
+ysb33r
+codevalet
+jruby-gradle
