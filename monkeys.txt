@@ -9,3 +9,4 @@ rtyler
 ysb33r
 codevalet
 jruby-gradle
+jruby
