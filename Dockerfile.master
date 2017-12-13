@@ -64,6 +64,7 @@ EXPOSE ${agent_port}
 # Grab the latest jenkins.sh from the Jenkins on Docker project
 RUN curl -fsSL https://github.com/jenkinsci/docker/raw/master/jenkins.sh > /usr/local/bin/jenkins.sh && \
         chmod +x /usr/local/bin/jenkins.sh
+RUN curl -fsSL https://github.com/jenkinsci/docker/raw/master/jenkins-support > /usr/local/bin/jenkins-support
 
 
 # Ensure that all our plugins are bundled properly, along with Groovy bootstrap
