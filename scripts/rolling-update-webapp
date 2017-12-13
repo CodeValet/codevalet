@@ -1,3 +1,7 @@
 #!/bin/sh
 
-exec kubectl rolling-update webapp --image=rtyler/codevalet-webapp:latest --image-pull-policy=Always --update-period=10s
+POD=$(kubectl get pods --namespace=webapp -l app=webapp | tail -n 1 | awk '{ print $1 }')
+
+echo ">> Killing ${POD}"
+
+exec kubectl delete pod --namespace=webapp ${POD}
