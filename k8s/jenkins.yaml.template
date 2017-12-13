@@ -19,7 +19,7 @@ items:
       ports:
         - name: 'http'
           port: 80
-          targetPort: 8080
+          targetPort: 80
           protocol: TCP
         - name: 'jnlp'
           port: 50000
@@ -88,7 +88,7 @@ items:
               image: "rtyler/codevalet-master:latest"
               imagePullPolicy: Always
               ports:
-                - containerPort: 8080
+                - containerPort: 80
                   name: http
                 - containerPort: 50000
                   name: jnlp
