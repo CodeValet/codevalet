@@ -5,5 +5,5 @@
 import jenkins.model.*
 
 if (System.env.get('GITHUB_USER')) {
-    JenkinsLocationConfiguration.get().setUrl("https://${System.env.get('GITHUB_USER'}.codevalet.io/")
+    JenkinsLocationConfiguration.get().setUrl("https://${System.env.get('GITHUB_USER')}.codevalet.io/")
 }
