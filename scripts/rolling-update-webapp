@@ -1,7 +1,8 @@
 #!/bin/sh
 
-POD=$(kubectl get pods --namespace=webapp -l app=webapp | tail -n 1 | awk '{ print $1 }')
-
-echo ">> Killing ${POD}"
-
-exec kubectl delete pod --namespace=webapp ${POD}
+NAMESPACE=webapp
+for pod in $(kubectl get pods --namespace=${NAMESPACE} -l app=webapp -o name); do
+    echo ">> Terminating ${pod}"
+    kubectl delete --namespace=${NAMESPACE} ${pod}
+    # Sleep to allow Kubernetes to pull the latest image
+done;
