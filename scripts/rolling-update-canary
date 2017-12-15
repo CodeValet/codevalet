@@ -1,3 +1,9 @@
 #!/bin/sh
 
-exec kubectl rolling-update canary --image=rtyler/codevalet-canary:latest --image-pull-policy=Always --update-period=10s
+NAMESPACE=canary
+for pod in $(kubectl get pods --namespace=${NAMESPACE} -l app=canary -o name); do
+    echo ">> Terminating ${pod}"
+    kubectl delete --namespace=${NAMESPACE} ${pod}
+    # Sleep to allow Kubernetes to pull the latest image
+    sleep 5
+done;
