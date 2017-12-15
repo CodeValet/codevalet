@@ -76,7 +76,8 @@ items:
       template:
         metadata:
           labels:
-            app: "jenkins-@@USER@@"
+            app: 'jenkins'
+            owner: '@@USER@@'
           annotations:
         spec:
           securityContext:
