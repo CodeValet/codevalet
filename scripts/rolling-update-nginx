@@ -1,3 +1,0 @@
-#!/bin/sh
-
-exec kubectl rolling-update nginx --image=rtyler/codevalet-proxy:latest --image-pull-policy=Always --update-period=10s

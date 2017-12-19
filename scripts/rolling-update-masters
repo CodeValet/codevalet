@@ -1,7 +1,6 @@
 #!/bin/sh
 
-REPO_DIR=$(realpath $(dirname $0)/../)
 
-for monkey in $(cat $REPO_DIR/monkeys.txt); do
-    kubectl rolling-update jenkins-${monkey} --image=rtyler/codevalet-master:latest --image-pull-policy=Always --update-period=10s
+for pod in $(kubectl get pods --all-namespaces -o name -l kind=master); do
+    echo $pod;
 done;
