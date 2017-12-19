@@ -36,6 +36,9 @@ fi;
 
 pushd $REPOS_DIR
 
+  # See https://github.com/jenkinsci/azure-commons-plugin/pull/15
+  git clone --depth 1 -b jenkins-48636 git://github.com/abayer/azure-commons-plugin.git
+
   # Grab the latest datadog plugin from their org (it's not in jenkinsci)
   git clone --depth 1 git://github.com/datadog/jenkins-datadog-plugin.git datadog-plugin
 
