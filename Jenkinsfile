@@ -16,28 +16,6 @@ pipeline {
                 sh 'make generate-k8s'
             }
         }
-        stage('Create builder') {
-            steps {
-                sh 'make builder'
-            }
-        }
-        stage('Build necessary plugins') {
-            when { branch 'master' }
-            steps {
-                sh 'make plugins'
-            }
-        }
-        stage('Create master container') {
-            when { branch 'master' }
-            steps {
-                sh 'make master'
-            }
-            post {
-                always {
-                    archiveArtifacts artifacts: 'build/git-refs.txt', fingerprint: true
-                }
-            }
-        }
         stage('Test') {
             steps {
                 sh 'make check'
