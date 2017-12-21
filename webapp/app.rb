@@ -67,6 +67,10 @@ module CodeValet
       haml :doc, :layout => :_base
     end
 
+    get '/abuse' do
+      haml :abuse, :layout => :_base
+    end
+
     get '/profile' do
       unless env['warden'].user
         redirect to('/')
