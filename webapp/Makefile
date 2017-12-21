@@ -1,3 +1,4 @@
+IMAGE_NAME=codevalet/webapp
 
 all: check container
 
@@ -13,10 +14,13 @@ run: depends monkeys.txt
 	./scripts/ruby bundle exec puma
 
 check-container: container
-	docker run --rm rtyler/codevalet-webapp:latest bundle exec puma --version
+	docker run --rm $(IMAGE_NAME):latest bundle exec puma --version
 
 container: depends Dockerfile monkeys.txt
-	docker build -t rtyler/codevalet-webapp .
+	docker build -t $(IMAGE_NAME) .
+
+deploy: check-container
+	docker push $(IMAGE_NAME):latest
 
 clean:
 	rm -rf vendor
@@ -24,4 +28,4 @@ clean:
 monkeys.txt: ../monkeys.txt
 	cp ../monkeys.txt .
 
-.PHONY: all depends clean run check container spec check-container
+.PHONY: all depends clean run check container spec check-container deploy

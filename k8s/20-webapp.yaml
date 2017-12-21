@@ -35,7 +35,7 @@ items:
         spec:
           containers:
             - name: 'webapp'
-              image: 'rtyler/codevalet-webapp:latest'
+              image: 'codevalet/webapp:latest'
               imagePullPolicy: Always
               ports:
                 - containerPort: 9292
