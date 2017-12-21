@@ -1,8 +1,0 @@
-workflow-aggregator-plugin
-blueocean-plugin
-github-oauth-plugin
-azure-vm-agents-plugin
-kubernetes-plugin
-matrix-auth-plugin
-embeddable-build-status-plugin
-sentry-plugin
