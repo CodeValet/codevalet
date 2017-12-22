@@ -3,86 +3,95 @@
     {
       :name => 'Ubuntu 16.04',
       :labels => ['ubuntu', 'linux', 'docker'],
-      :capabilities => '',
+      :capabilities => ['Docker-enabled'],
     },
     {
       :name => 'FreeBSD 11.1',
       :labels => ['freebsd', 'bsd'],
-      :capabilities => '',
+      :capabilities => [],
     },
   ]
 
 .container
   .col-md-10
     .row
-      %h2
-        Overview
       .container
         .row
-          %p
-            Code Valet is powered by
-            %a{:href => 'https://jenkins.io'}
-              Jenkins&reg; 2
-            with
-            %a{:href => 'https://jenkins.io/doc/book/pipeline'}
-              Jenkins Pipeline.
+          .col-lg-12
+            %h2
+              Overview
+            %p
+              Code Valet is powered by
+              %a{:href => 'https://jenkins.io'}
+                Jenkins&reg; 2
+              with
+              %a{:href => 'https://jenkins.io/doc/book/pipeline'}
+                Jenkins Pipeline.
         .row
-          %h3
-            Features enabled
-          :markdown
-            The current list of features enabled on Code Valet, which can be
-            used in a `Jenkinsfile` are:
+          .col-lg-12
+            %h3
+              Features enabled
+            %p
+              :markdown
+                The current list of features enabled on Code Valet, which can be
+                used in a `Jenkinsfile` are:
 
-            * XML (JUnit) test reporting integration via the `junit` step.
-            * Embedded status badges, such as:  [![Build Status](https://codevalet.io/u/codevalet/job/CodeValet/job/codevalet/job/master/badge/icon)](https://codevalet.io/u/codevalet/blue/organizations/jenkins/CodeValet%2Fcodevalet/activity)
+                * XML (JUnit) test reporting integration via the `junit` step.
+                * Embedded status badges, such as:  [![Build Status](https://codevalet.codevalet.io/job/codevalet/job/master/badge/icon)](https://codevalet.codevalet.io/job/codevalet/job/master/)
 
 
     .row
-      %h2
-        Platforms
+      .col-lg-12
+        %h2
+          Platforms
 
-      .container
-        .row
-          %p
-            Code Valet provides ephemeral execution environments, dedicated to
-            each user or organization. This provides the best trade-off between
-            performance and reliability using the tools currently available.
-          %p
-            %table.table
-              %thead
+        %p
+          Code Valet provides ephemeral execution environments, dedicated to
+          each user or organization. This provides the best trade-off between
+          performance and reliability using the tools currently available.
+        %p
+          %table.table
+            %thead
+              %tr
+                %th
+                  Platform
+                %th
+                  Capabilities
+                %th
+                  Example
+                  %code
+                    Jenkinsfile
+            %tbody
+              - platforms.each do |p|
                 %tr
-                  %th
-                    Platform
-                  %th
-                    Capabilities
-                  %th
-                    Example
-              %tbody
-                - platforms.each do |p|
-                  %tr
-                    %td
+                  %td
+                    %p
                       %strong= p[:name]
+                    %p
+                      Labels:
                       %ul
                         - p[:labels].each do |label|
                           %li
                             %code= label
 
-                    %td
-                      = p[:capabilities]
-                    %td
-                      %pre
-                        %code
-                          :plain
-                            pipeline {
-                              agent { label '#{p[:labels].first}' }
-                              stages {
-                                stage('Build') {
-                                  steps {
-                                    sh 'uname -a'
-                                    sh 'cat /etc/issue'
-                                  }
+                  %td
+                    - p[:capabilities].each do |cap|
+                      %p
+                        = cap
+                  %td
+                    %pre
+                      %code
+                        :plain
+                          pipeline {
+                            agent { label '#{p[:labels].first}' }
+                            stages {
+                              stage('Build') {
+                                steps {
+                                  sh 'uname -a'
+                                  sh 'cat /etc/issue'
                                 }
                               }
                             }
+                          }
 
 
