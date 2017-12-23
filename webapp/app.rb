@@ -1,9 +1,13 @@
 #!/usr/bin/env ruby
 
+require 'securerandom'
+require 'yaml'
+
+require 'dalli'
 require 'haml'
+require 'rack/session/dalli'
 require 'sinatra/base'
 require 'warden/github'
-require 'yaml'
 
 Haml::TempleEngine.disable_option_validator!
 
@@ -24,10 +28,23 @@ module CodeValet
     include Warden::GitHub::SSO
 
     enable  :sessions
+    set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
+
     enable  :raise_errors
-    disable :show_exceptions
+
+    if ENV['PRODUCTION']
+      disable :show_exceptions
+    end
 
     set :public_folder, File.dirname(__FILE__) + '/assets'
+
+    configure do
+      if ENV['PRODUCTION'] || ENV['USE_MEMCACHED']
+        use Rack::Session::Dalli,
+          :namespace => 'webapp.sessions',
+          :cache => Dalli::Client.new(ENV.fetch('MEMCACHED_SERVER') { 'cache:11211' })
+      end
+    end
 
     use Warden::Manager do |config|
       config.failure_app = AuthFailre

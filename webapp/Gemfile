@@ -1,11 +1,27 @@
 source 'https://rubygems.org'
 
+# Web framework, yey
 gem 'sinatra'
-gem 'haml'
-gem 'warden-github'
-gem 'kramdown'
-gem 'sentry-raven'
+
+# The actual webserver
 gem 'puma'
+
+# For rendering all the views
+gem 'haml'
+
+# Provides some semblance of github-based authentication and authorization
+# within the rack app
+gem 'warden-github'
+
+# Responsible for markdown parsing in the webapp views
+gem 'kramdown'
+
+# Send exceptions into Sentry from the app
+gem 'sentry-raven'
+
+# For memcached access
+gem 'dalli'
+gem 'rack-cache'
 
 group :test do
   gem 'rspec'

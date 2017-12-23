@@ -2,6 +2,18 @@
 version: '3'
 services:
   webapp:
-    image: 'rtyler/codevalet-webapp:latest'
+    image: 'codevalet/webapp:latest'
     ports:
       - 9292:9292
+    links:
+      - cache
+    environment:
+      - USE_MEMCACHED=true
+      - SESSION_SECRET=fiddlesticks
+      - WARDEN_GITHUB_VERIFIER_SECRET=fiddlesticks
+
+  cache:
+    image: 'memcached:alpine'
+    command: '-v'
+    ports:
+      - 11211:11211
