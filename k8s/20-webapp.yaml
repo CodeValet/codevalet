@@ -15,6 +15,7 @@ items:
       selector:
         app: 'webapp'
 
+
   - apiVersion: extensions/v1beta1
     kind: Deployment
     metadata:
@@ -23,7 +24,7 @@ items:
       labels:
         name: 'webapp'
     spec:
-      replicas: 1
+      replicas: 3
       strategy:
         type: RollingUpdate
       selector:
@@ -54,22 +55,83 @@ items:
                   value: 'https://codevalet.io/github/authenticate'
                 - name: GITHUB_CLIENT_ID
                   value: '790a28783a813e2b2b3c'
+                - name: MEMCACHED_SERVER
+                  value: 'memcached.webapp.svc.cluster.local'
+                - name: SESSION_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: 'webapp'
+                      key: 'sessionsecret'
                 - name: SENTRY_DSN
                   valueFrom:
                     secretKeyRef:
-                      name: webapp
-                      key: sentry
+                      name: 'webapp'
+                      key: 'sentry'
                 - name: GITHUB_CLIENT_SECRET
                   valueFrom:
                     secretKeyRef:
-                      name: oauth
-                      key: secret
+                      name: 'oauth'
+                      key: 'secret'
               livenessProbe:
                 httpGet:
                   path: /
                   port: 9292
                 initialDelaySeconds: 60
                 timeoutSeconds: 10
+
+  - apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      name: 'memcached'
+      namespace: 'webapp'
+      labels:
+        name: 'memcached'
+    spec:
+      replicas: 3
+      strategy:
+        type: RollingUpdate
+      selector:
+      template:
+        metadata:
+          labels:
+            app: 'memcached'
+        spec:
+          containers:
+            - name: 'cache'
+              image: 'memcached:alpine'
+              imagePullPolicy: Always
+              ports:
+                - containerPort: 11211
+                  name: 'memcached'
+              resources:
+                requests:
+                  memory: 64M
+                limits:
+                  memory: 256M
+              livenessProbe:
+                tcpSocket:
+                  port: 'memcached'
+                initialDelaySeconds: 30
+                timeoutSeconds: 5
+              readinessProbe:
+                tcpSocket:
+                  port: 'memcached'
+                initialDelaySeconds: 5
+                timeoutSeconds: 1
+
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: 'memcached'
+      namespace: 'webapp'
+    spec:
+      clusterIP: None
+      ports:
+        - port: 11211
+          targetPort: 'memcached'
+          protocol: TCP
+      selector:
+        app: 'memcached'
 
   - apiVersion: extensions/v1beta1
     kind: Ingress

@@ -87,7 +87,7 @@ items:
             runAsUser: 0
           containers:
             - name: "jenkins-@@USER@@"
-              image: "rtyler/codevalet-master:latest"
+              image: "codevalet/master:latest"
               imagePullPolicy: Always
               ports:
                 - containerPort: 80
