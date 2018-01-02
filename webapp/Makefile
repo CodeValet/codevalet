@@ -7,7 +7,7 @@ check: spec check-container
 depends: Gemfile
 	./scripts/ruby bundle install
 
-spec: depends
+spec: depends monkeys.txt
 	./scripts/ruby bundle exec rspec -c
 
 run: depends monkeys.txt
