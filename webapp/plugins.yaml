@@ -1,0 +1,42 @@
+---
+# List of plugins which should be considered for the Jenkins Developer
+# Dashbaord, see https://github.com/CodeValet/codevalet/milestone/3
+essential:
+  azure-vm-agents:
+    repo: 'https://github.com/jenkinsci/azure-vm-agents-plugin'
+    ref: 'master'
+  blueocean:
+    repo: 'https://github.com/jenkinsci/blueocean-plugin'
+    ref: 'master'
+  datadog:
+    repo: 'https://github.com/datadog/jenkins-datadog-plugin.git'
+    ref: 'master'
+  declarative:
+    repo: 'https://github.com/jenkinsci/pipeline-model-definition-plugin'
+    ref: 'master'
+  embeddable-status:
+    repo: 'https://github.com/jenkinsci/embeddable-build-status-plugin'
+    ref: 'master'
+  git:
+    repo: 'https://github.com/jenkinsci/git-plugin'
+    ref: 'master'
+  git-client:
+    repo: 'https://github.com/jenkinsci/git-client-plugin'
+    ref: 'master'
+  github-oauth:
+    repo: 'https://github.com/jenkinsci/github-oauth-plugin'
+    ref: 'master'
+  matrix-auth:
+    repo: 'https://github.com/jenkinsci/matrix-auth-plugin'
+    ref: 'master'
+  pipeline:
+    repo: 'https://github.com/jenkinsci/workflow-aggregator-plugin'
+    ref: 'master'
+  restricted-declarative:
+    repo: 'https://github.com/abayer/restricted-declarative-plugin'
+    ref: 'master'
+  sentry:
+    repo: 'https://github.com/jenkinsci/sentry-plugin'
+    ref: 'master'
+
+inessential:

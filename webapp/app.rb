@@ -9,20 +9,11 @@ require 'rack/session/dalli'
 require 'sinatra/base'
 require 'warden/github'
 
+require 'codevalet/webapp/authfailure'
+
 Haml::TempleEngine.disable_option_validator!
 
 module CodeValet
-  class AuthFailre < Sinatra::Base
-    get '/unauthenticated' do
-      status 403
-      <<-EOS
-      <h2>Unable to authenticate, sorry bud.</h2>
-      <p>#{env['warden'].message}</p>
-      <p>#{ENV['REDIRECT_URI']}</p>
-      <p>#{ENV['GITHUB_CLIENT_ID']}</p>
-      EOS
-    end
-  end
 
   class App < Sinatra::Base
     include Warden::GitHub::SSO
@@ -47,7 +38,7 @@ module CodeValet
     end
 
     use Warden::Manager do |config|
-      config.failure_app = AuthFailre
+      config.failure_app = CodeValet::WebApp::AuthFailure
       config.default_strategies :github
       config.scope_defaults :default, :config => {
         :scope            => 'read:public_repo,user:email',

@@ -33,7 +33,10 @@ ENV BUNDLE_DISABLE_SHARED_GEMS=true
 ADD app.rb ${APP_DIR}/
 ADD monkeys.txt ${APP_DIR}/
 ADD config.ru ${APP_DIR}/
-ADD views ${APP_DIR}/views/
-ADD assets ${APP_DIR}/assets/
+ADD lib ${APP_DIR}/
+ADD views ${APP_DIR}/
+ADD assets ${APP_DIR}/
+
+ADD plugins.yaml ${APP_DIR}/
 
 CMD bundle exec puma
