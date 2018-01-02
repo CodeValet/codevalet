@@ -9,23 +9,18 @@ require 'rack/session/dalli'
 require 'sinatra/base'
 require 'warden/github'
 
+require 'codevalet/webapp/authfailure'
+require 'codevalet/webapp/monkeys'
+require 'codevalet/webapp/plugins'
+
 Haml::TempleEngine.disable_option_validator!
 
 module CodeValet
-  class AuthFailre < Sinatra::Base
-    get '/unauthenticated' do
-      status 403
-      <<-EOS
-      <h2>Unable to authenticate, sorry bud.</h2>
-      <p>#{env['warden'].message}</p>
-      <p>#{ENV['REDIRECT_URI']}</p>
-      <p>#{ENV['GITHUB_CLIENT_ID']}</p>
-      EOS
-    end
-  end
-
+  # Primary web application for CodeValet.io
   class App < Sinatra::Base
     include Warden::GitHub::SSO
+
+    ADMINISTRATORS = %w(rtyler).freeze
 
     enable  :sessions
     set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
@@ -47,7 +42,7 @@ module CodeValet
     end
 
     use Warden::Manager do |config|
-      config.failure_app = AuthFailre
+      config.failure_app = CodeValet::WebApp::AuthFailure
       config.default_strategies :github
       config.scope_defaults :default, :config => {
         :scope            => 'read:public_repo,user:email',
@@ -66,13 +61,12 @@ module CodeValet
       end
 
       def masters
-        file_path = File.expand_path(File.dirname(__FILE__) + '/monkeys.txt')
-        @monkeys ||= File.open(file_path, 'r').readlines.map(&:chomp).sort
+        return CodeValet::WebApp::Monkeys.data
       end
 
       def admin?
         return false unless env['warden'].user
-        return env['warden'].user.login == 'rtyler'
+        return ADMINISTRATORS.include? env['warden'].user.login
       end
     end
 

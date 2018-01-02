@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+NAME=codevalet-webapp-container-check
+PORT=9292
+URL=http://127.0.0.1:${PORT}/
+
+function terminate {
+  echo ">> Terminating ${NAME}"
+  docker stop ${NAME}
+  docker rm ${NAME}
+}
+
+trap terminate EXIT
+
+docker run --detach -e RACK_ENV=production \
+  -p ${PORT}:${PORT} \
+  --name ${NAME} \
+  ${IMAGE_NAME}:latest \
+
+for i in $(seq 1 10); do
+  echo ">> Attempt #${i} to reach ${URL}"
+  curl --silent --fail ${URL} 2>&1 > /dev/null
+  STATUS=$?
+  if [ $STATUS -eq 22 ]; then
+    echo "----> :( Container returned a bad response"
+    break;
+  elif [ $STATUS -ne 0 ]; then
+    sleep 1;
+  else
+    echo '----> :) The app returned a 200'
+    exit 0;
+  fi;
+  sleep 1
+done;
+
+echo "----> :( Failed to reach the container"
+
+docker logs ${NAME}
+
+docker ps
+# If we get to here without having bailed out, something is wrong
+exit 1

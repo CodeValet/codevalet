@@ -16,6 +16,7 @@ GEM
     haml (5.0.1)
       temple (>= 0.8.0)
       tilt
+    hashie (3.5.7)
     i18n (0.8.6)
     kramdown (1.14.0)
     minitest (5.10.3)
@@ -71,6 +72,7 @@ PLATFORMS
 DEPENDENCIES
   dalli
   haml
+  hashie
   kramdown
   puma
   rack-cache
@@ -80,4 +82,4 @@ DEPENDENCIES
   warden-github
 
 BUNDLED WITH
-   1.16.0
+   1.16.1
