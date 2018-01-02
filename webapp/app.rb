@@ -10,11 +10,13 @@ require 'sinatra/base'
 require 'warden/github'
 
 require 'codevalet/webapp/authfailure'
+require 'codevalet/webapp/monkeys'
+require 'codevalet/webapp/plugins'
 
 Haml::TempleEngine.disable_option_validator!
 
 module CodeValet
-
+  # Primary web application for CodeValet.io
   class App < Sinatra::Base
     include Warden::GitHub::SSO
 
@@ -57,8 +59,7 @@ module CodeValet
       end
 
       def masters
-        file_path = File.expand_path(File.dirname(__FILE__) + '/monkeys.txt')
-        @monkeys ||= File.open(file_path, 'r').readlines.map(&:chomp).sort
+        return CodeValet::WebApp::Monkeys.data
       end
 
       def admin?

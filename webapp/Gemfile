@@ -9,6 +9,9 @@ gem 'puma'
 # For rendering all the views
 gem 'haml'
 
+# For dotted references to Hashes
+gem 'hashie'
+
 # Provides some semblance of github-based authentication and authorization
 # within the rack app
 gem 'warden-github'
