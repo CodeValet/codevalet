@@ -14,7 +14,7 @@ run: depends monkeys.txt
 	./scripts/ruby bundle exec puma
 
 check-container: container
-	docker run --rm $(IMAGE_NAME):latest bundle exec puma --version
+	IMAGE_NAME=$(IMAGE_NAME) ./scripts/container-check
 
 container: depends Dockerfile monkeys.txt
 	docker build -t $(IMAGE_NAME) .
