@@ -20,6 +20,8 @@ module CodeValet
   class App < Sinatra::Base
     include Warden::GitHub::SSO
 
+    ADMINISTRATORS = %w(rtyler).freeze
+
     enable  :sessions
     set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
 
@@ -64,7 +66,7 @@ module CodeValet
 
       def admin?
         return false unless env['warden'].user
-        return env['warden'].user.login == 'rtyler'
+        return ADMINISTRATORS.include? env['warden'].user.login
       end
     end
 
