@@ -1,5 +1,6 @@
 abayer
 bitwiseman
+dduportal
 jmmeessen
 lavaliere
 markewaite
